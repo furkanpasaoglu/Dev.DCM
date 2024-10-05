@@ -1,4 +1,26 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Dev.DCM.Entities.Addresses;
+using Dev.DCM.Entities.AuthorizedPersons;
+using Dev.DCM.Entities.Cities;
+using Dev.DCM.Entities.ContactInfos;
+using Dev.DCM.Entities.CustomerMovementCodes;
+using Dev.DCM.Entities.CustomerMovements;
+using Dev.DCM.Entities.Districts;
+using Dev.DCM.Entities.FacilityAddresses;
+using Dev.DCM.Entities.FixedLines;
+using Dev.DCM.Entities.GsmDetails;
+using Dev.DCM.Entities.IdentityDocuments;
+using Dev.DCM.Entities.IdentityTypes;
+using Dev.DCM.Entities.Institutions;
+using Dev.DCM.Entities.InternetServices;
+using Dev.DCM.Entities.JobCodes;
+using Dev.DCM.Entities.Lines;
+using Dev.DCM.Entities.LineStatusCodes;
+using Dev.DCM.Entities.ResidentialAddresses;
+using Dev.DCM.Entities.SatellitePhones;
+using Dev.DCM.Entities.Satellites;
+using Dev.DCM.Entities.ServiceTypes;
+using Dev.DCM.Entities.Subscribers;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -50,6 +72,29 @@ public class DCMDbContext :
     // Tenant Management
     public DbSet<Tenant> Tenants { get; set; }
     public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
+    //Entities
+    public DbSet<Address> Addresses { get; set; }
+    public DbSet<AuthorizedPerson> AuthorizedPersons { get; set; }
+    public DbSet<City> Cities { get; set; }
+    public DbSet<ContactInfo> ContactInfos { get; set; }
+    public DbSet<CustomerMovement> CustomerMovements { get; set; }
+    public DbSet<District> Districts { get; set; }
+    public DbSet<FacilityAddress> FacilityAddresses { get; set; }
+    public DbSet<FixedLine> FixedLines { get; set; }
+    public DbSet<GsmDetail> GsmDetails { get; set; }
+    public DbSet<IdentityDocument> IdentityDocuments { get; set; }
+    public DbSet<Institution> Institutions { get; set; }
+    public DbSet<InternetService> InternetServices { get; set; }
+    public DbSet<Line> Lines { get; set; }
+    public DbSet<ResidentialAddress> ResidentialAddresses { get; set; }
+    public DbSet<SatellitePhone> SatellitePhones { get; set; }
+    public DbSet<Satellite> Satellites { get; set; }
+    public DbSet<Subscriber> Subscribers { get; set; }
+    public DbSet<ServiceType> ServiceTypes { get; set; }
+    public DbSet<LineStatusCode> LineStatusCodes { get; set; }
+    public DbSet<JobCode> JobCodes { get; set; }
+    public DbSet<IdentityType> IdentityTypes { get; set; }
+    public DbSet<CustomerMovementCode> CustomerMovementCodes { get; set; }
 
     #endregion
 
