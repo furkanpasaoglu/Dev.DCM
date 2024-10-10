@@ -3,16 +3,21 @@
 /// <summary>
 /// Meslek Kodları
 /// </summary>
-public class JobCode : Entity<int>
+public class JobCode : Entity<Guid>
 {
+    /// <summary>
+    /// No
+    /// </summary>
+    public int No { get; set; }
+
     /// <summary>
     /// Meslek Kodu
     /// </summary>
-    public string? Code { get; set; }
+    public string Code { get; set; } = null!;
 
     
     /// <summary>
     /// Meslek Adı
     /// </summary>
-    public string? Name { get; set; }
+    public string Name { get; set; } = null!;
 }

@@ -1,0 +1,38 @@
+@page
+@using Dev.DCM.Localization
+@using Dev.DCM.Permissions
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@model Dev.DCM.Web.Pages.Districts.Index
+@inject IStringLocalizer<DCMResource> L
+@inject IAuthorizationService AuthorizationService
+@{
+    ViewBag.Title = L["Districts"];
+}
+
+@section scripts
+{
+    <abp-script src="/Pages/Districts/Index.js"/>
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["Districts"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-end">
+                @if (await AuthorizationService.IsGrantedAsync(DCMPermissions.Districts.Create))
+                {
+                    <abp-button id="NewDistrictButton"
+                                text="@L["NewDistrict"].Value"
+                                icon="plus"
+                                button-type="Primary"/>
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="DistrictsTable"></abp-table>
+    </abp-card-body>
+</abp-card>

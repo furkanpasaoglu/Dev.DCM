@@ -52,6 +52,5 @@ public class DCMEntityFrameworkCoreModule : AbpModule
                  * See also DCMMigrationsDbContextFactory for EF Core tooling. */
             options.UseNpgsql();
         });
-
     }
 }

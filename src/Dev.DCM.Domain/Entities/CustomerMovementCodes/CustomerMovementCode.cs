@@ -3,20 +3,20 @@
 /// <summary>
 /// Müşteri Hareket Kodları
 /// </summary>
-public class CustomerMovementCode : Entity<int>
+public class CustomerMovementCode : Entity<Guid>
 {
     /// <summary>
     /// Hareket Kodu
     /// </summary>
-    public string? Code { get; set; }
+    public string Code { get; set; } = null!;
 
     /// <summary>
     /// Hareket Açıklaması
     /// </summary>
-    public string? Description { get; set; }
+    public string Description { get; set; } = null!;
 
     /// <summary>
     /// Ne Şekilde İşleneceği (Processing Method)
     /// </summary>
-    public string ProcessingMethod { get; set; }
+    public string ProcessingMethod { get; set; } = null!;
 }

@@ -13,3 +13,4 @@ global using Dev.DCM.Entities.Institutions;
 global using Dev.DCM.Entities.AuthorizedPersons;
 global using Dev.DCM.Entities.Satellites;
 global using Dev.DCM.Entities.SatellitePhones;
+global using Dev.DCM.Entities.Countries;

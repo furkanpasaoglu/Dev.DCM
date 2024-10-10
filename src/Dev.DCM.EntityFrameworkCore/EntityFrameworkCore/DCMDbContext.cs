@@ -2,6 +2,7 @@
 using Dev.DCM.Entities.AuthorizedPersons;
 using Dev.DCM.Entities.Cities;
 using Dev.DCM.Entities.ContactInfos;
+using Dev.DCM.Entities.Countries;
 using Dev.DCM.Entities.CustomerMovementCodes;
 using Dev.DCM.Entities.CustomerMovements;
 using Dev.DCM.Entities.Districts;
@@ -26,6 +27,7 @@ using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
@@ -73,23 +75,24 @@ public class DCMDbContext :
     public DbSet<Tenant> Tenants { get; set; }
     public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
     //Entities
-    public DbSet<Address> Addresses { get; set; }
-    public DbSet<AuthorizedPerson> AuthorizedPersons { get; set; }
+    // public DbSet<Address> Addresses { get; set; }
+    // public DbSet<AuthorizedPerson> AuthorizedPersons { get; set; }
+    // public DbSet<ContactInfo> ContactInfos { get; set; }
+    // public DbSet<CustomerMovement> CustomerMovements { get; set; }
+    // public DbSet<FacilityAddress> FacilityAddresses { get; set; }
+    // public DbSet<FixedLine> FixedLines { get; set; }
+    // public DbSet<GsmDetail> GsmDetails { get; set; }
+    // public DbSet<IdentityDocument> IdentityDocuments { get; set; }
+    // public DbSet<Institution> Institutions { get; set; }
+    // public DbSet<InternetService> InternetServices { get; set; }
+    // public DbSet<Line> Lines { get; set; }
+    // public DbSet<ResidentialAddress> ResidentialAddresses { get; set; }
+    // public DbSet<SatellitePhone> SatellitePhones { get; set; }
+    // public DbSet<Satellite> Satellites { get; set; }
+    // public DbSet<Subscriber> Subscribers { get; set; }
+    public DbSet<Country> Countries { get; set; }
     public DbSet<City> Cities { get; set; }
-    public DbSet<ContactInfo> ContactInfos { get; set; }
-    public DbSet<CustomerMovement> CustomerMovements { get; set; }
     public DbSet<District> Districts { get; set; }
-    public DbSet<FacilityAddress> FacilityAddresses { get; set; }
-    public DbSet<FixedLine> FixedLines { get; set; }
-    public DbSet<GsmDetail> GsmDetails { get; set; }
-    public DbSet<IdentityDocument> IdentityDocuments { get; set; }
-    public DbSet<Institution> Institutions { get; set; }
-    public DbSet<InternetService> InternetServices { get; set; }
-    public DbSet<Line> Lines { get; set; }
-    public DbSet<ResidentialAddress> ResidentialAddresses { get; set; }
-    public DbSet<SatellitePhone> SatellitePhones { get; set; }
-    public DbSet<Satellite> Satellites { get; set; }
-    public DbSet<Subscriber> Subscribers { get; set; }
     public DbSet<ServiceType> ServiceTypes { get; set; }
     public DbSet<LineStatusCode> LineStatusCodes { get; set; }
     public DbSet<JobCode> JobCodes { get; set; }
@@ -119,13 +122,57 @@ public class DCMDbContext :
         builder.ConfigureFeatureManagement();
         builder.ConfigureTenantManagement();
 
-        /* Configure your own tables/entities inside here */
 
-        //builder.Entity<YourEntity>(b =>
-        //{
-        //    b.ToTable(DCMConsts.DbTablePrefix + "YourEntities", DCMConsts.DbSchema);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    //...
-        //});
+        builder.Entity<ServiceType>(b =>
+        {
+            b.ToTable(DCMConsts.DbTablePrefix + "ServiceTypes", DCMConsts.DbSchema);
+            b.ConfigureByConvention();
+        });
+        
+        builder.Entity<LineStatusCode>(b =>
+        {
+            b.ToTable(DCMConsts.DbTablePrefix + "LineStatusCodes", DCMConsts.DbSchema);
+            b.ConfigureByConvention();
+        });
+        
+        builder.Entity<JobCode>(b =>
+        {
+            b.ToTable(DCMConsts.DbTablePrefix + "JobCodes", DCMConsts.DbSchema);
+            b.ConfigureByConvention();
+        });
+        
+        builder.Entity<IdentityType>(b =>
+        {
+            b.ToTable(DCMConsts.DbTablePrefix + "IdentityTypes", DCMConsts.DbSchema);
+            b.ConfigureByConvention();
+        });
+        
+        builder.Entity<CustomerMovementCode>(b =>
+        {
+            b.ToTable(DCMConsts.DbTablePrefix + "CustomerMovementCodes", DCMConsts.DbSchema);
+            b.ConfigureByConvention();
+        });
+
+        builder.Entity<Country>(b =>
+        {
+            b.ToTable(DCMConsts.DbTablePrefix + "Countries", DCMConsts.DbSchema);
+            b.ConfigureByConvention();
+            //b.HasMany<City>().WithOne().HasForeignKey(x => x.CountryId);
+        });
+
+        builder.Entity<City>(b =>
+        {
+            b.ToTable(DCMConsts.DbTablePrefix + "Cities", DCMConsts.DbSchema);
+            b.ConfigureByConvention();
+            //b.HasOne<Country>().WithMany().HasForeignKey(x => x.CountryId);
+            //b.HasMany<District>().WithOne().HasForeignKey(x => x.CityId);
+        });
+
+        builder.Entity<District>(b =>
+        {
+            b.ToTable(DCMConsts.DbTablePrefix + "Districts", DCMConsts.DbSchema);
+            b.ConfigureByConvention();
+            //b.HasOne<City>().WithMany().HasForeignKey(x => x.CityId);
+        });
     }
 }

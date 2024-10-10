@@ -3,12 +3,12 @@
 /// <summary>
 /// İl
 /// </summary>
-public class City : Entity<int>
+public class City : Entity<Guid>
 {
     /// <summary>
     /// İlçe Plaka Kodu
     /// </summary>
-    public int PlateCode { get; set; }  
+    public string? Code { get; set; }  
 
     /// <summary>
     /// İlçe Adı
@@ -19,4 +19,7 @@ public class City : Entity<int>
     /// Şehirdeki İlçeler
     /// </summary>
     public ICollection<District> Districts { get; private set; } = new List<District>();
+
+    public Guid CountryId { get; set; }
+    public Country Country { get; set; } = default!;
 }

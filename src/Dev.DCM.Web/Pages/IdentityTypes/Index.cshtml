@@ -1,0 +1,37 @@
+@page
+@using Dev.DCM.Localization
+@using Dev.DCM.Permissions
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@model Dev.DCM.Web.Pages.CustomerMovementCodes.Index
+@inject IStringLocalizer<DCMResource> L
+@inject IAuthorizationService AuthorizationService
+@{
+    ViewBag.Title = L["IdentityTypes"];
+}
+@section scripts
+{
+    <abp-script src="/Pages/IdentityTypes/Index.js"/>
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["IdentityTypes"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-end">
+                @if (await AuthorizationService.IsGrantedAsync(DCMPermissions.IdentityTypes.Create))
+                {
+                    <abp-button id="NewIdentityTypeButton"
+                                text="@L["NewIdentityType"].Value"
+                                icon="plus"
+                                button-type="Primary"/>
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="IdentityTypesTable"></abp-table>
+    </abp-card-body>
+</abp-card>

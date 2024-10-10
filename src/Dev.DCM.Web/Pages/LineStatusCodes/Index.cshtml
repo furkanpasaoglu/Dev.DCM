@@ -1,0 +1,37 @@
+@page
+@using Dev.DCM.Localization
+@using Dev.DCM.Permissions
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@model Dev.DCM.Web.Pages.LineStatusCodes.Index
+@inject IStringLocalizer<DCMResource> L
+@inject IAuthorizationService AuthorizationService
+@{
+    ViewBag.Title = L["LineStatusCodes"];
+}
+@section scripts
+{
+    <abp-script src="/Pages/LineStatusCodes/Index.js"/>
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["LineStatusCodes"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-end">
+                @if (await AuthorizationService.IsGrantedAsync(DCMPermissions.LineStatusCodes.Create))
+                {
+                    <abp-button id="NewLineStatusCodeButton"
+                                text="@L["NewLineStatusCode"].Value"
+                                icon="plus"
+                                button-type="Primary"/>
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="LineStatusCodesTable"></abp-table>
+    </abp-card-body>
+</abp-card>

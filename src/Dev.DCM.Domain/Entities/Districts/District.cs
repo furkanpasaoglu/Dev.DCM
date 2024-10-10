@@ -3,8 +3,13 @@
 /// <summary>
 /// İlçe
 /// </summary>
-public class District
+public class District : Entity<Guid>
 {
+    /// <summary>
+    /// İlçe Adı
+    /// </summary>
+    public string? Code { get; set; } 
+    
     /// <summary>
     /// İlçe Adı
     /// </summary>
