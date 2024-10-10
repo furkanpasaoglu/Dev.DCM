@@ -3,11 +3,15 @@
 @using Dev.DCM.Permissions
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
 @model Dev.DCM.Web.Pages.Countries.Index
 @inject IStringLocalizer<DCMResource> L
 @inject IAuthorizationService AuthorizationService
+@inject IPageLayout PageLayout
 @{
-    ViewBag.Title = L["Countries"];
+    PageLayout.Content.BreadCrumb.Add(L["Dashboard"], "/");
+    PageLayout.Content.BreadCrumb.Add(L["Locations"]);
+    PageLayout.Content.Title = L["Countries"];
 }
 
 @section scripts
