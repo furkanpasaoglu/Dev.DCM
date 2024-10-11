@@ -25,6 +25,7 @@ public class CreateModal(ICityAppService cityAppService, ICountryAppService coun
         Countries = countries.Items
             .Select(c => new SelectListItem(c.Name, c.Id.ToString()))
             .ToList();
+        Countries.Insert(0, new SelectListItem { Value = "", Text = L["Select"] });
     }
 
     public async Task<IActionResult> OnPostAsync()

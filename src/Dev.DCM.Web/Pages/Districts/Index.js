@@ -20,6 +20,10 @@ $(function () {
                     visible: false
                 },
                 {
+                    title: l('CityName'),
+                    data: "city.name"
+                },
+                {
                     title: l('Code'),
                     data: "code"
                 },

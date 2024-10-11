@@ -116,6 +116,8 @@
     "CityNameIsRequired": "Şehir adı zorunludur",
     "DistrictNameIsRequired": "İlçe adı zorunludur",
     "CountryNameIsRequired": "Ülke adı zorunludur",
-    "CityNamePlaceholder": "Şehir adını girin"
+    "CityNamePlaceholder": "Şehir adını girin",
+    "DistrictNamePlaceholder": "İlçe adını girin",
+    "Select": "Seçiniz",
   }
 }

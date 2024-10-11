@@ -26,7 +26,6 @@ public class CityAppService :
         UpdatePolicyName = Permissions.DCMPermissions.Cities.Edit;
         DeletePolicyName = Permissions.DCMPermissions.Cities.Delete;
     }
-    //Override method include country name
     public override async Task<PagedResultDto<CityDto>> GetListAsync(PagedAndSortedResultRequestDto input)
     {
         var queryable = await Repository.WithDetailsAsync(c => c.Country);
@@ -37,9 +36,5 @@ public class CityAppService :
             totalCount,
             ObjectMapper.Map<List<City>, List<CityDto>>(items)
         );
-        
-        
     }
-
-   
 }

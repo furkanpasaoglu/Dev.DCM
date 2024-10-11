@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Dev.DCM.Entities.Districts;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -22,5 +25,17 @@ public class DistrictAppService :
         CreatePolicyName = Permissions.DCMPermissions.Districts.Create;
         UpdatePolicyName = Permissions.DCMPermissions.Districts.Edit;
         DeletePolicyName = Permissions.DCMPermissions.Districts.Delete;
+    }
+
+    public override async Task<PagedResultDto<DistrictDto>> GetListAsync(PagedAndSortedResultRequestDto input)
+    {
+        var queryable = await Repository.WithDetailsAsync(c => c.City);
+        var totalCount = await AsyncExecuter.CountAsync(queryable);
+        var items = await AsyncExecuter.ToListAsync(queryable.PageBy(input));
+        
+        return new PagedResultDto<DistrictDto>(
+            totalCount,
+            ObjectMapper.Map<List<District>, List<DistrictDto>>(items)
+        );
     }
 }
