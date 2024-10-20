@@ -16,6 +16,7 @@ using Dev.DCM.Entities.InternetServices;
 using Dev.DCM.Entities.JobCodes;
 using Dev.DCM.Entities.Lines;
 using Dev.DCM.Entities.LineStatusCodes;
+using Dev.DCM.Entities.Parameters;
 using Dev.DCM.Entities.ResidentialAddresses;
 using Dev.DCM.Entities.SatellitePhones;
 using Dev.DCM.Entities.Satellites;
@@ -98,6 +99,7 @@ public class DCMDbContext :
     public DbSet<JobCode> JobCodes { get; set; }
     public DbSet<IdentityType> IdentityTypes { get; set; }
     public DbSet<CustomerMovementCode> CustomerMovementCodes { get; set; }
+    public DbSet<Parameter> Parameters { get; set; }
 
     #endregion
 
@@ -173,6 +175,12 @@ public class DCMDbContext :
             b.ToTable(DCMConsts.DbTablePrefix + "Districts", DCMConsts.DbSchema);
             b.ConfigureByConvention();
             //b.HasOne<City>().WithMany().HasForeignKey(x => x.CityId);
+        });
+        
+        builder.Entity<Parameter>(b =>
+        {
+            b.ToTable(DCMConsts.DbTablePrefix + "Parameters", DCMConsts.DbSchema);
+            b.ConfigureByConvention();
         });
     }
 }

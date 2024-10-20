@@ -6,6 +6,7 @@ using Dev.DCM.Entities.Districts;
 using Dev.DCM.Entities.IdentityTypes;
 using Dev.DCM.Entities.JobCodes;
 using Dev.DCM.Entities.LineStatusCodes;
+using Dev.DCM.Entities.Parameters;
 using Dev.DCM.Entities.ServiceTypes;
 using Dev.DCM.Services.Cities;
 using Dev.DCM.Services.Countries;
@@ -14,6 +15,7 @@ using Dev.DCM.Services.Districts;
 using Dev.DCM.Services.IdentityTypes;
 using Dev.DCM.Services.JobCodes;
 using Dev.DCM.Services.LineStatusCodes;
+using Dev.DCM.Services.Parameters;
 using Dev.DCM.Services.ServiceTypes;
 
 namespace Dev.DCM;
@@ -53,8 +55,9 @@ public class DCMApplicationAutoMapperProfile : Profile
         CreateMap<Country, CountryDto>();
         CreateMap<CreateUpdateCountryDto, Country>();
         CreateMap<CountryDto, CreateUpdateCountryDto>();
-        
-        
-        
+
+        CreateMap<Parameter, ParameterDto>();
+        CreateMap<CreateUpdateParameterDto, Parameter>();
+        CreateMap<ParameterDto, CreateUpdateParameterDto>();
     }
 }

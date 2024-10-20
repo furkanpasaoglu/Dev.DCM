@@ -16,4 +16,5 @@ public class DCMMenus
     public const string Districts = Prefix + ".District";
     public const string Cities = Prefix + ".City";
     public const string Countries = Prefix + ".Country";
+    public const string Parameters = Prefix + ".Parameter";
 }

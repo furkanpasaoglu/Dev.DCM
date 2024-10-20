@@ -4,30 +4,31 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Localization
 @using Volo.Abp.AspNetCore.Mvc.UI.Layout
-@model Dev.DCM.Web.Pages.JobCodes.Index
+@model Dev.DCM.Web.Pages.Parameters.Index
 @inject IStringLocalizer<DCMResource> L
 @inject IAuthorizationService AuthorizationService
 @inject IPageLayout PageLayout
 @{
     PageLayout.Content.BreadCrumb.Add(L["Dashboard"], "/");
-    PageLayout.Content.Title = L["JobCodes"];
+    PageLayout.Content.Title = L["Parameters"];
 }
+
 @section scripts
 {
-    <abp-script src="/Pages/JobCodes/Index.js"/>
+    <abp-script src="/Pages/Parameters/Index.js"/>
 }
 
 <abp-card>
     <abp-card-header>
         <abp-row>
             <abp-column size-md="_6">
-                <abp-card-title>@L["JobCodes"]</abp-card-title>
+                <abp-card-title>@L["Parameters"]</abp-card-title>
             </abp-column>
             <abp-column size-md="_6" class="text-end">
-                @if (await AuthorizationService.IsGrantedAsync(DCMPermissions.JobCodes.Create))
+                @if (await AuthorizationService.IsGrantedAsync(DCMPermissions.Parameters.Create))
                 {
-                    <abp-button id="NewJobCodeButton"
-                                text="@L["NewJobCode"].Value"
+                    <abp-button id="NewParameterButton"
+                                text="@L["NewParameter"].Value"
                                 icon="plus"
                                 button-type="Primary"/>
                 }
@@ -35,6 +36,6 @@
         </abp-row>
     </abp-card-header>
     <abp-card-body>
-        <abp-table striped-rows="true" id="JobCodesTable"></abp-table>
+        <abp-table striped-rows="true" id="ParametersTable"></abp-table>
     </abp-card-body>
 </abp-card>

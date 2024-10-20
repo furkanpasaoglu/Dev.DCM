@@ -37,9 +37,22 @@ public class DCMMenuContributor : IMenuContributor
             )
         );
         
+        context.Menu.Items.Insert(
+            1,
+            new ApplicationMenuItem(
+                DCMMenus.Parameters,
+                l["Menu:Parameters"],
+                "/Parameters",
+                icon: "fas fa-cogs",
+                order: 0,
+                groupName: DCMMenus.Parameters
+            ).RequirePermissions(requiresAll:false, 
+                DCMPermissions.Parameters.Default)
+        );
+        
         //Locations
         context.Menu.Items.Insert(
-            1, new ApplicationMenuItem(
+            2, new ApplicationMenuItem(
                 DCMMenus.Locations,
                 l["Menu:Locations"],
                 "~/",
@@ -78,7 +91,7 @@ public class DCMMenuContributor : IMenuContributor
         
         // Types
         context.Menu.Items.Insert(
-            1,new ApplicationMenuItem(
+            3,new ApplicationMenuItem(
                 DCMMenus.Types,
                 l["Menu:Types"],
                 "~/",
@@ -133,6 +146,7 @@ public class DCMMenuContributor : IMenuContributor
             ))
         );
         
+        context.Menu.Items.Add(new ApplicationMenuItem(DCMMenus.Parameters, l["Menu:Parameters"]));
         context.Menu.Groups.Add(new ApplicationMenuGroup(DCMMenus.Locations, l["Menu:Locations"]));
         context.Menu.Groups.Add(new ApplicationMenuGroup(DCMMenus.Types, l["Menu:Types"]));
        

@@ -10,7 +10,13 @@ public class DCMPermissionDefinitionProvider : PermissionDefinitionProvider
     {
         var myGroup = context.AddGroup(DCMPermissions.GroupName, L("Permission:Types"));
         var locationGroup  =context.AddGroup(DCMPermissions.Locations, L("Permission:Locations"));
+        var parameterGroup = context.AddGroup(DCMPermissions.Parameter, L("Permission:Parameters"));
 
+        var parameters = parameterGroup.AddPermission(DCMPermissions.Parameters.Default, L("Permission:Parameters"));
+        parameters.AddChild(DCMPermissions.Parameters.Create, L("Permission:Parameter.Create"));
+        parameters.AddChild(DCMPermissions.Parameters.Edit, L("Permission:Parameter.Edit"));
+        parameters.AddChild(DCMPermissions.Parameters.Delete, L("Permission:Parameter.Delete"));
+        
         var serviceTypes = myGroup.AddPermission(DCMPermissions.ServiceTypes.Default, L("Permission:ServiceTypes"));
         serviceTypes.AddChild(DCMPermissions.ServiceTypes.Create, L("Permission:ServiceType.Create"));
         serviceTypes.AddChild(DCMPermissions.ServiceTypes.Edit, L("Permission:ServiceType.Edit"));
