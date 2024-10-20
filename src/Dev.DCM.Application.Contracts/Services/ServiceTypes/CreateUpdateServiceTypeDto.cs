@@ -21,4 +21,6 @@ public class CreateUpdateServiceTypeDto
     
     [Required]
     public string ValueDescription { get; set; } = default!;
+
+    [Required] public bool IsActive { get; set; } = false;
 }

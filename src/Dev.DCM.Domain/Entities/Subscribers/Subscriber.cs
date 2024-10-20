@@ -1,4 +1,6 @@
-﻿namespace Dev.DCM.Entities.Subscribers;
+﻿using Dev.DCM.Entities.Phones;
+
+namespace Dev.DCM.Entities.Subscribers;
 
 /// <summary>
 /// ABONE Entity
@@ -114,4 +116,7 @@ public class Subscriber : FullAuditedEntity<Guid>
     /// ABONE_ADRES
     /// </summary>
     public Address? EmailAddress { get; set; }
+    
+    public Guid? PhoneId { get; set; }
+    public Phone? Phone { get; set; }
 }

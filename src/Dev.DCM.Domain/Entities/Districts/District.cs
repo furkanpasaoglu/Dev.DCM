@@ -1,4 +1,6 @@
-﻿namespace Dev.DCM.Entities.Districts;
+﻿using Dev.DCM.Entities.Aihs;
+
+namespace Dev.DCM.Entities.Districts;
 
 /// <summary>
 /// İlçe
@@ -21,4 +23,8 @@ public class District : Entity<Guid>
     /// </summary>
     public Guid CityId { get; set; }
     public City City { get; set; } = default!;
+    
+    public ICollection<ResidentialAddress> ResidentialAddresses { get; private set; } = new List<ResidentialAddress>();
+    public ICollection<Aih> Aihs { get; private set; } = new List<Aih>();
+
 }

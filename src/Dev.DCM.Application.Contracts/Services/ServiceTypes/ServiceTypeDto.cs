@@ -13,4 +13,5 @@ public class ServiceTypeDto : EntityDto<Guid>
     public string InfrastructureType { get; set; } = default!;
     public string ServiceTypeValue { get; set; } = default!;
     public string ValueDescription { get; set; } = default!;
+    public bool IsActive { get; set; } = false;
 }

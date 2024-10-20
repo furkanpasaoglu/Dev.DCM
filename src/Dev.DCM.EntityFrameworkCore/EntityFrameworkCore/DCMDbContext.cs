@@ -1,5 +1,8 @@
-﻿using Dev.DCM.Entities.Addresses;
+﻿using Dev.DCM.Entities.Activations;
+using Dev.DCM.Entities.Addresses;
+using Dev.DCM.Entities.Aihs;
 using Dev.DCM.Entities.AuthorizedPersons;
+using Dev.DCM.Entities.Branches;
 using Dev.DCM.Entities.Cities;
 using Dev.DCM.Entities.ContactInfos;
 using Dev.DCM.Entities.Countries;
@@ -17,11 +20,14 @@ using Dev.DCM.Entities.JobCodes;
 using Dev.DCM.Entities.Lines;
 using Dev.DCM.Entities.LineStatusCodes;
 using Dev.DCM.Entities.Parameters;
+using Dev.DCM.Entities.Phones;
 using Dev.DCM.Entities.ResidentialAddresses;
+using Dev.DCM.Entities.Sales;
 using Dev.DCM.Entities.SatellitePhones;
 using Dev.DCM.Entities.Satellites;
 using Dev.DCM.Entities.ServiceTypes;
 using Dev.DCM.Entities.Subscribers;
+using Dev.DCM.Entities.Updaters;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -91,6 +97,12 @@ public class DCMDbContext :
     // public DbSet<SatellitePhone> SatellitePhones { get; set; }
     // public DbSet<Satellite> Satellites { get; set; }
     // public DbSet<Subscriber> Subscribers { get; set; }
+    //public DbSet<Aih> Aihs { get; set; }
+    //public DbSet<Updater> Updaters { get; set; }
+    //public DbSet<Branch> Branches { get; set; }
+    //public DbSet<Activation> Activations { get; set; }
+    //public DbSet<Phone> Phones { get; set; }
+    //public DbSet<Sale> Sales { get; set; }
     public DbSet<Country> Countries { get; set; }
     public DbSet<City> Cities { get; set; }
     public DbSet<District> Districts { get; set; }

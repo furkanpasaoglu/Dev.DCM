@@ -40,6 +40,10 @@ $(function () {
                     data: "valueDescription"
                 },
                 {
+                    title: l('IsActive'),
+                    data: "isActive"
+                },
+                {
                     title: l('Actions'),
                     rowAction: {
                         items:

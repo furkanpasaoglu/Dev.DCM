@@ -1,7 +1,7 @@
 ﻿namespace Dev.DCM.Entities.ServiceTypes;
 
 /// <summary>
-/// Hizmet Tipleri
+/// Hizmet Tipleri (HIZMET_TIPI)
 /// </summary>
 public class ServiceType : Entity<Guid>
 {
@@ -29,4 +29,9 @@ public class ServiceType : Entity<Guid>
     /// Değer Açıklama
     /// </summary>
     public string ValueDescription { get; set; } = null!;
+
+    /// <summary>
+    /// Hizmet Tipi Aktif Mi?
+    ///  </summary>
+    public bool IsActive { get; set; } = false;
 }

@@ -8,7 +8,7 @@ public class ResidentialAddress : FullAuditedEntity<Guid>
     /// <summary>
     /// ABONE_ADRES_YERLESIM_IL
     /// </summary>
-    public int? CityId { get; set; }
+    public Guid? CityId { get; set; }
     /// <summary>
     /// İl
     /// </summary>
@@ -17,7 +17,7 @@ public class ResidentialAddress : FullAuditedEntity<Guid>
     /// <summary>
     /// ABONE_ADRES_YERLESIM_ILCE
     /// </summary>
-    public int DistrictId { get; set; }
+    public Guid? DistrictId { get; set; }
 
     /// <summary>
     /// İlçe
