@@ -13,7 +13,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Dev.DCM.Migrations
 {
     [DbContext(typeof(DCMDbContext))]
-    [Migration("20241020190759_Edited_ServiceTypes")]
+    [Migration("20241020193313_Edited_ServiceTypes")]
     partial class Edited_ServiceTypes
     {
         /// <inheritdoc />
@@ -26,146 +26,6 @@ namespace Dev.DCM.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("Dev.DCM.Entities.Addresses.Address", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("DeletionTime");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("LastModifierId");
-
-                    b.Property<Guid>("SubscriberId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SubscriberId")
-                        .IsUnique();
-
-                    b.ToTable("Address");
-                });
-
-            modelBuilder.Entity("Dev.DCM.Entities.Aihs.Aih", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("BorderCrossingPointA")
-                        .HasColumnType("text");
-
-                    b.Property<string>("BorderCrossingPointB")
-                        .HasColumnType("text");
-
-                    b.Property<string>("CircuitNaming")
-                        .HasColumnType("text");
-
-                    b.Property<string>("CircuitRoute")
-                        .HasColumnType("text");
-
-                    b.Property<Guid?>("CityId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("CountryA")
-                        .HasColumnType("text");
-
-                    b.Property<Guid?>("CountryId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("DeletionTime");
-
-                    b.Property<Guid?>("DistrictId")
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("LastModifierId");
-
-                    b.Property<string>("PopInfo")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ServiceProvider")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SpeedProfile")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SubscriberApartmentNoB")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SubscriberBuildingNoB")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SubscriberNeighborhoodB")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SubscriberStreetB")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("CountryId");
-
-                    b.HasIndex("DistrictId");
-
-                    b.ToTable("Aih");
-                });
 
             modelBuilder.Entity("Dev.DCM.Entities.Cities.City", b =>
                 {
@@ -187,58 +47,6 @@ namespace Dev.DCM.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("AppCities", (string)null);
-                });
-
-            modelBuilder.Entity("Dev.DCM.Entities.ContactInfos.ContactInfo", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("AddressId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("ContactPhoneNumber1")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ContactPhoneNumber2")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("DeletionTime");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("LastModifierId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AddressId")
-                        .IsUnique();
-
-                    b.ToTable("ContactInfo");
                 });
 
             modelBuilder.Entity("Dev.DCM.Entities.Countries.Country", b =>
@@ -300,85 +108,6 @@ namespace Dev.DCM.Migrations
                     b.HasIndex("CityId");
 
                     b.ToTable("AppDistricts", (string)null);
-                });
-
-            modelBuilder.Entity("Dev.DCM.Entities.IdentityDocuments.IdentityDocument", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Affiliation")
-                        .HasColumnType("text");
-
-                    b.Property<string>("City")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("DeletionTime");
-
-                    b.Property<string>("District")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FamilyRegistryNumber")
-                        .HasColumnType("text");
-
-                    b.Property<string>("IdentityType")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<DateTime?>("IssuedDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("IssuedPlace")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("LastModifierId");
-
-                    b.Property<string>("NeighborhoodVillage")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PageNumber")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SerialNumber")
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("SubscriberId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("VolumeNumber")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SubscriberId")
-                        .IsUnique();
-
-                    b.ToTable("IdentityDocument");
                 });
 
             modelBuilder.Entity("Dev.DCM.Entities.IdentityTypes.IdentityType", b =>
@@ -479,77 +208,6 @@ namespace Dev.DCM.Migrations
                     b.ToTable("AppParameters", (string)null);
                 });
 
-            modelBuilder.Entity("Dev.DCM.Entities.ResidentialAddresses.ResidentialAddress", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("AddressId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("AddressNo")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ApartmentNumber")
-                        .HasColumnType("text");
-
-                    b.Property<string>("BuildingNumber")
-                        .HasColumnType("text");
-
-                    b.Property<Guid?>("CityId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("DeletionTime");
-
-                    b.Property<Guid?>("DistrictId")
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("LastModifierId");
-
-                    b.Property<string>("Neighborhood")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Street")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AddressId")
-                        .IsUnique();
-
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("DistrictId");
-
-                    b.ToTable("ResidentialAddress");
-                });
-
             modelBuilder.Entity("Dev.DCM.Entities.ServiceTypes.ServiceType", b =>
                 {
                     b.Property<Guid>("Id")
@@ -580,106 +238,6 @@ namespace Dev.DCM.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppServiceTypes", (string)null);
-                });
-
-            modelBuilder.Entity("Dev.DCM.Entities.Subscribers.Subscriber", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("BirthDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("BirthPlace")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int?>("CustomerType")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("DeletionTime");
-
-                    b.Property<string>("FatherName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Gender")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("LastModifierId");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("MersisNumber")
-                        .HasColumnType("text");
-
-                    b.Property<string>("MotherMaidenName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("MotherName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NationalId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Nationality")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Occupation")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PassportNumber")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("SubscriptionEnd")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime?>("SubscriptionStart")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Tariff")
-                        .HasColumnType("text");
-
-                    b.Property<string>("TaxNumber")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Subscriber");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
@@ -2474,38 +2032,6 @@ namespace Dev.DCM.Migrations
                     b.ToTable("AbpTenantConnectionStrings", (string)null);
                 });
 
-            modelBuilder.Entity("Dev.DCM.Entities.Addresses.Address", b =>
-                {
-                    b.HasOne("Dev.DCM.Entities.Subscribers.Subscriber", "Subscriber")
-                        .WithOne("EmailAddress")
-                        .HasForeignKey("Dev.DCM.Entities.Addresses.Address", "SubscriberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Subscriber");
-                });
-
-            modelBuilder.Entity("Dev.DCM.Entities.Aihs.Aih", b =>
-                {
-                    b.HasOne("Dev.DCM.Entities.Cities.City", "City")
-                        .WithMany("Aihs")
-                        .HasForeignKey("CityId");
-
-                    b.HasOne("Dev.DCM.Entities.Countries.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId");
-
-                    b.HasOne("Dev.DCM.Entities.Districts.District", "District")
-                        .WithMany("Aihs")
-                        .HasForeignKey("DistrictId");
-
-                    b.Navigation("City");
-
-                    b.Navigation("Country");
-
-                    b.Navigation("District");
-                });
-
             modelBuilder.Entity("Dev.DCM.Entities.Cities.City", b =>
                 {
                     b.HasOne("Dev.DCM.Entities.Countries.Country", "Country")
@@ -2517,17 +2043,6 @@ namespace Dev.DCM.Migrations
                     b.Navigation("Country");
                 });
 
-            modelBuilder.Entity("Dev.DCM.Entities.ContactInfos.ContactInfo", b =>
-                {
-                    b.HasOne("Dev.DCM.Entities.Addresses.Address", "Address")
-                        .WithOne("ContactInfo")
-                        .HasForeignKey("Dev.DCM.Entities.ContactInfos.ContactInfo", "AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Address");
-                });
-
             modelBuilder.Entity("Dev.DCM.Entities.Districts.District", b =>
                 {
                     b.HasOne("Dev.DCM.Entities.Cities.City", "City")
@@ -2537,40 +2052,6 @@ namespace Dev.DCM.Migrations
                         .IsRequired();
 
                     b.Navigation("City");
-                });
-
-            modelBuilder.Entity("Dev.DCM.Entities.IdentityDocuments.IdentityDocument", b =>
-                {
-                    b.HasOne("Dev.DCM.Entities.Subscribers.Subscriber", "Subscriber")
-                        .WithOne("IdentityDocument")
-                        .HasForeignKey("Dev.DCM.Entities.IdentityDocuments.IdentityDocument", "SubscriberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Subscriber");
-                });
-
-            modelBuilder.Entity("Dev.DCM.Entities.ResidentialAddresses.ResidentialAddress", b =>
-                {
-                    b.HasOne("Dev.DCM.Entities.Addresses.Address", "Address")
-                        .WithOne("ResidentialAddress")
-                        .HasForeignKey("Dev.DCM.Entities.ResidentialAddresses.ResidentialAddress", "AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Dev.DCM.Entities.Cities.City", "City")
-                        .WithMany("ResidentialAddresses")
-                        .HasForeignKey("CityId");
-
-                    b.HasOne("Dev.DCM.Entities.Districts.District", "District")
-                        .WithMany("ResidentialAddresses")
-                        .HasForeignKey("DistrictId");
-
-                    b.Navigation("Address");
-
-                    b.Navigation("City");
-
-                    b.Navigation("District");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>
@@ -2715,39 +2196,14 @@ namespace Dev.DCM.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Dev.DCM.Entities.Addresses.Address", b =>
-                {
-                    b.Navigation("ContactInfo");
-
-                    b.Navigation("ResidentialAddress");
-                });
-
             modelBuilder.Entity("Dev.DCM.Entities.Cities.City", b =>
                 {
-                    b.Navigation("Aihs");
-
                     b.Navigation("Districts");
-
-                    b.Navigation("ResidentialAddresses");
                 });
 
             modelBuilder.Entity("Dev.DCM.Entities.Countries.Country", b =>
                 {
                     b.Navigation("Cities");
-                });
-
-            modelBuilder.Entity("Dev.DCM.Entities.Districts.District", b =>
-                {
-                    b.Navigation("Aihs");
-
-                    b.Navigation("ResidentialAddresses");
-                });
-
-            modelBuilder.Entity("Dev.DCM.Entities.Subscribers.Subscriber", b =>
-                {
-                    b.Navigation("EmailAddress");
-
-                    b.Navigation("IdentityDocument");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>

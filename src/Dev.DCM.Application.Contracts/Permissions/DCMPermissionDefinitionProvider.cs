@@ -1,6 +1,7 @@
 ﻿using Dev.DCM.Localization;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Localization;
+using Volo.Abp.MultiTenancy;
 
 namespace Dev.DCM.Permissions;
 

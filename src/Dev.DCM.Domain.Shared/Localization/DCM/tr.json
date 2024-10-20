@@ -130,6 +130,7 @@
     "DistrictNamePlaceholder": "İlçe adını girin",
     "Select": "Seçiniz",
     "Locations": "Konumlar",
-    "IsActive": "Aktif mi?"
+    "IsActive": "Aktif mi?",
+    "PhoneWithSearch": "Telefon ile arama yapmak için aşağıdaki kutucuğa numarayı girin ve arama yapın."
   }
 }

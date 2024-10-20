@@ -1,15 +1,13 @@
-/* Getting-Started */
-.starting-content {
-    position: relative;
-    z-index: 2;
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height to center vertically */
 }
-.card-bg-image {
-    pointer-events: none;
-    position: absolute;
-    width: 630px;
-    height: auto;
-    bottom: 0;
-    right: 0;
-    z-index: 1;
+.centered-content {
+    text-align: center;
 }
-/* Getting-Started End */
+.input-group {
+    max-width: 500px; /* Limit the width of the search bar */
+    margin: 0 auto; /* Center the search bar */
+}

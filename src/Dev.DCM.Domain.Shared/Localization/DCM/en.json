@@ -130,6 +130,7 @@
     "DistrictNamePlaceholder": "Enter district name",
     "Select": "Select",
     "Locations": "Locations",
-    "IsActive": "Is Active"
+    "IsActive": "Is Active",
+    "PhoneWithSearch": "To make a phone call, enter the number in the box below and make the call."
   }
 }

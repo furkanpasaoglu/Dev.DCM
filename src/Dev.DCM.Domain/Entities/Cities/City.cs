@@ -25,6 +25,6 @@ public class City : Entity<Guid>
     public Guid CountryId { get; set; }
     public Country Country { get; set; } = default!;
     
-    public ICollection<ResidentialAddress> ResidentialAddresses { get; private set; } = new List<ResidentialAddress>();
-    public ICollection<Aih> Aihs { get; private set; } = new List<Aih>();
+    // public ICollection<ResidentialAddress> ResidentialAddresses { get; private set; } = new List<ResidentialAddress>();
+    // public ICollection<Aih> Aihs { get; private set; } = new List<Aih>();
 }
