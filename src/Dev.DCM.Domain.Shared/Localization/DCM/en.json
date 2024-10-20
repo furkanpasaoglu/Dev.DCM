@@ -129,6 +129,7 @@
     "CityNamePlaceholder": "Enter city name",
     "DistrictNamePlaceholder": "Enter district name",
     "Select": "Select",
-    "Locations": "Locations"
+    "Locations": "Locations",
+    "IsActive": "Is Active"
   }
 }

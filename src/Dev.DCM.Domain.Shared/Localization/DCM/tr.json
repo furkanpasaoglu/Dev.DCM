@@ -129,6 +129,7 @@
     "CityNamePlaceholder": "Şehir adını girin",
     "DistrictNamePlaceholder": "İlçe adını girin",
     "Select": "Seçiniz",
-    "Locations": "Konumlar"
+    "Locations": "Konumlar",
+    "IsActive": "Aktif mi?"
   }
 }
