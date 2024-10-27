@@ -43,7 +43,7 @@ public class DCMDomainSharedModule : AbpModule
         Configure<AbpLocalizationOptions>(options =>
         {
             options.Resources
-                .Add<DCMResource>("en")
+                .Add<DCMResource>("tr")
                 .AddBaseTypes(typeof(AbpValidationResource))
                 .AddVirtualJson("/Localization/DCM");
 
