@@ -24,7 +24,7 @@ public class District : Entity<Guid>
     public Guid CityId { get; set; }
     public City City { get; set; } = default!;
     
-    // public ICollection<ResidentialAddress> ResidentialAddresses { get; private set; } = new List<ResidentialAddress>();
-    // public ICollection<Aih> Aihs { get; private set; } = new List<Aih>();
+    public ICollection<ResidentialAddress> ResidentialAddresses { get; private set; } = new List<ResidentialAddress>();
+    public ICollection<Aih> Aihs { get; private set; } = new List<Aih>();
 
 }

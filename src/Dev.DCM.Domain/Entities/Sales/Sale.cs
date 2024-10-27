@@ -1,3 +1,4 @@
+using Dev.DCM.Entities.Phones;
 using Dev.DCM.Entities.ServiceTypes;
 
 namespace Dev.DCM.Entities.Sales;
@@ -5,7 +6,7 @@ namespace Dev.DCM.Entities.Sales;
 /// <summary>
 /// Satış
 /// </summary>
-public class Sale  : FullAuditedEntity<Guid>
+public class Sale : FullAuditedEntity<Guid>
 {
     /// <summary>
     /// Abone Id - Satışın bağlı olduğu abone
@@ -16,6 +17,9 @@ public class Sale  : FullAuditedEntity<Guid>
     /// Abone - Relation
     /// </summary>
     public Subscriber Subscriber { get; set; } = null!;
+
+    public Guid PhoneId { get; set; }
+    public Phone Phone { get; set; } = null!;
     
     /// <summary>
     /// Hizmet Tipi Id - Hizmet tipinin seçileceği alan (Foreign Key)

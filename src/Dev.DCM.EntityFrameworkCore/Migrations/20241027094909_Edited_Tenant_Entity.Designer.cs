@@ -3,6 +3,7 @@ using System;
 using Dev.DCM.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Volo.Abp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Dev.DCM.Migrations
 {
     [DbContext(typeof(DCMDbContext))]
-    partial class DCMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241027094909_Edited_Tenant_Entity")]
+    partial class Edited_Tenant_Entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1620,9 +1623,15 @@ namespace Dev.DCM.Migrations
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("TenantId1")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("TenantId");
+                    b.HasIndex("TenantId")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId1");
 
                     b.ToTable("AppTenantDetails", (string)null);
                 });
@@ -3673,9 +3682,15 @@ namespace Dev.DCM.Migrations
 
             modelBuilder.Entity("Dev.DCM.Entities.TenantDetails.TenantDetail", b =>
                 {
+                    b.HasOne("Volo.Abp.TenantManagement.Tenant", null)
+                        .WithOne()
+                        .HasForeignKey("Dev.DCM.Entities.TenantDetails.TenantDetail", "TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Volo.Abp.TenantManagement.Tenant", "Tenant")
                         .WithMany()
-                        .HasForeignKey("TenantId")
+                        .HasForeignKey("TenantId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

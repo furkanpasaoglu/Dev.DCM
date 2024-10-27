@@ -3,6 +3,7 @@ using System;
 using Dev.DCM.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Volo.Abp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Dev.DCM.Migrations
 {
     [DbContext(typeof(DCMDbContext))]
-    partial class DCMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241027081556_Added_All_Entities")]
+    partial class Added_All_Entities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1123,9 +1126,6 @@ namespace Dev.DCM.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("DeletionTime");
 
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("boolean");
-
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
@@ -1140,16 +1140,11 @@ namespace Dev.DCM.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("LastModifierId");
 
-                    b.Property<string>("Number")
+                    b.Property<string>("Numbers")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("SubscriberId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("SubscriberId");
 
                     b.ToTable("AppPhones", (string)null);
                 });
@@ -1260,9 +1255,6 @@ namespace Dev.DCM.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("LastModifierId");
 
-                    b.Property<Guid>("PhoneId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("ServiceTypeId")
                         .HasColumnType("uuid");
 
@@ -1270,9 +1262,6 @@ namespace Dev.DCM.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PhoneId")
-                        .IsUnique();
 
                     b.HasIndex("ServiceTypeId");
 
@@ -1550,6 +1539,9 @@ namespace Dev.DCM.Migrations
                     b.Property<string>("PassportNumber")
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("PhoneId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime?>("SubscriptionEnd")
                         .HasColumnType("timestamp without time zone");
 
@@ -1567,64 +1559,10 @@ namespace Dev.DCM.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PhoneId")
+                        .IsUnique();
+
                     b.ToTable("AppSubscribers", (string)null);
-                });
-
-            modelBuilder.Entity("Dev.DCM.Entities.TenantDetails.TenantDetail", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("DeletionTime");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("LastModifierId");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("OperatorCode")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("TaxNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TenantId");
-
-                    b.ToTable("AppTenantDetails", (string)null);
                 });
 
             modelBuilder.Entity("Dev.DCM.Entities.Updaters.Updater", b =>
@@ -3599,17 +3537,6 @@ namespace Dev.DCM.Migrations
                     b.Navigation("Subscriber");
                 });
 
-            modelBuilder.Entity("Dev.DCM.Entities.Phones.Phone", b =>
-                {
-                    b.HasOne("Dev.DCM.Entities.Subscribers.Subscriber", "Subscriber")
-                        .WithMany("Phones")
-                        .HasForeignKey("SubscriberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Subscriber");
-                });
-
             modelBuilder.Entity("Dev.DCM.Entities.ResidentialAddresses.ResidentialAddress", b =>
                 {
                     b.HasOne("Dev.DCM.Entities.Addresses.Address", "Address")
@@ -3635,12 +3562,6 @@ namespace Dev.DCM.Migrations
 
             modelBuilder.Entity("Dev.DCM.Entities.Sales.Sale", b =>
                 {
-                    b.HasOne("Dev.DCM.Entities.Phones.Phone", "Phone")
-                        .WithOne("Sale")
-                        .HasForeignKey("Dev.DCM.Entities.Sales.Sale", "PhoneId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Dev.DCM.Entities.ServiceTypes.ServiceType", "ServiceType")
                         .WithMany()
                         .HasForeignKey("ServiceTypeId")
@@ -3648,12 +3569,10 @@ namespace Dev.DCM.Migrations
                         .IsRequired();
 
                     b.HasOne("Dev.DCM.Entities.Subscribers.Subscriber", "Subscriber")
-                        .WithMany("Sales")
+                        .WithMany()
                         .HasForeignKey("SubscriberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Phone");
 
                     b.Navigation("ServiceType");
 
@@ -3671,15 +3590,13 @@ namespace Dev.DCM.Migrations
                     b.Navigation("SatelliteServiceDetail");
                 });
 
-            modelBuilder.Entity("Dev.DCM.Entities.TenantDetails.TenantDetail", b =>
+            modelBuilder.Entity("Dev.DCM.Entities.Subscribers.Subscriber", b =>
                 {
-                    b.HasOne("Volo.Abp.TenantManagement.Tenant", "Tenant")
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Dev.DCM.Entities.Phones.Phone", "Phone")
+                        .WithOne("Subscriber")
+                        .HasForeignKey("Dev.DCM.Entities.Subscribers.Subscriber", "PhoneId");
 
-                    b.Navigation("Tenant");
+                    b.Navigation("Phone");
                 });
 
             modelBuilder.Entity("Dev.DCM.Entities.Updaters.Updater", b =>
@@ -3887,8 +3804,7 @@ namespace Dev.DCM.Migrations
 
             modelBuilder.Entity("Dev.DCM.Entities.Phones.Phone", b =>
                 {
-                    b.Navigation("Sale")
-                        .IsRequired();
+                    b.Navigation("Subscriber");
                 });
 
             modelBuilder.Entity("Dev.DCM.Entities.Satellites.Satellite", b =>
@@ -3901,10 +3817,6 @@ namespace Dev.DCM.Migrations
                     b.Navigation("EmailAddress");
 
                     b.Navigation("IdentityDocument");
-
-                    b.Navigation("Phones");
-
-                    b.Navigation("Sales");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
