@@ -5,6 +5,16 @@ public static class DCMPermissions
     public const string GroupName = "DCM";
     public const string Locations = GroupName + ".Location";
     public const string Parameter = GroupName + ".Parameter";
+    public const string TenantDetails = GroupName + ".TenantDetail";
+    
+    
+    public static class TenantDetail
+    {
+        public const string Default = GroupName + ".TenantDetail";
+        public const string Create = Default + ".Create";
+        public const string Edit = Default + ".Edit";
+        public const string Delete = Default + ".Delete";
+    }
     
     public static class Parameters
     {

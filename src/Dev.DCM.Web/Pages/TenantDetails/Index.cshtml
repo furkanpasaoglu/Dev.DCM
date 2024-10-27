@@ -1,0 +1,41 @@
+@page
+@using Dev.DCM.Localization
+@using Dev.DCM.Permissions
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@model Dev.DCM.Web.Pages.TenantDetails.Index
+@inject IStringLocalizer<DCMResource> L
+@inject IAuthorizationService AuthorizationService
+@inject IPageLayout PageLayout
+@{
+    PageLayout.Content.BreadCrumb.Add(L["Dashboard"], "/");
+    PageLayout.Content.Title = L["TenantDetails"];
+}
+
+@section scripts
+{
+    <abp-script src="/Pages/TenantDetails/Index.js"/>
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["TenantDetails"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-end">
+                @if (await AuthorizationService.IsGrantedAsync(DCMPermissions.TenantDetail.Create))
+                {
+                    <abp-button id="NewTenantDetailsButton"
+                                text="@L["NewTenantDetails"].Value"
+                                icon="plus"
+                                button-type="Primary"/>
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="TenantDetailsTable"></abp-table>
+    </abp-card-body>
+</abp-card>

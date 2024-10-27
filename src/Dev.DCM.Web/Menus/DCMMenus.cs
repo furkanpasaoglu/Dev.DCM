@@ -17,4 +17,5 @@ public class DCMMenus
     public const string Cities = Prefix + ".City";
     public const string Countries = Prefix + ".Country";
     public const string Parameters = Prefix + ".Parameter";
+    public const string TenantDetails = Prefix + ".TenantDetail";
 }

@@ -50,6 +50,19 @@ public class DCMMenuContributor : IMenuContributor
                 DCMPermissions.Parameters.Default)
         );
         
+        context.Menu.Items.Insert(
+            1,
+            new ApplicationMenuItem(
+                DCMMenus.TenantDetails,
+                l["Menu:TenantDetails"],
+                "/TenantDetails",
+                icon: "fas fa-building",
+                order: 0,
+                groupName: DCMMenus.TenantDetails
+            ).RequirePermissions(requiresAll:false,
+                DCMPermissions.TenantDetail.Default)
+        );
+        
         //Locations
         context.Menu.Items.Insert(
             2, new ApplicationMenuItem(
