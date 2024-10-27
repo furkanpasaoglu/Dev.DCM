@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dev.DCM.Entities.Districts;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -38,4 +39,23 @@ public class DistrictAppService :
             ObjectMapper.Map<List<District>, List<DistrictDto>>(items)
         );
     }
+
+    public override async Task<DistrictDto> CreateAsync(CreateUpdateDistrictDto input)
+    {
+        await IsDistrictExists(input.Name);
+        return await base.CreateAsync(input);
+    }
+    
+    #region Validation
+
+    private async Task IsDistrictExists(string name)
+    {
+        var existing = await Repository.AnyAsync(c => c.Name == name);
+        if (!existing)
+        {
+            throw new UserFriendlyException(message: L["AlreadyExists"]);
+        }
+    }
+
+    #endregion
 }

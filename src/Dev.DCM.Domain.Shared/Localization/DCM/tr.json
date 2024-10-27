@@ -131,6 +131,7 @@
     "Select": "Seçiniz",
     "Locations": "Konumlar",
     "IsActive": "Aktif mi?",
-    "PhoneWithSearch": "Telefon ile arama yapmak için aşağıdaki kutucuğa numarayı girin ve arama yapın."
+    "PhoneWithSearch": "Telefon ile arama yapmak için aşağıdaki kutucuğa numarayı girin ve arama yapın.",
+    "AlreadyExists": "Zaten böyle bir kayıt mevcut. Lütfen farklı bir değer girin."
   }
 }

@@ -275,55 +275,67 @@ public class DCMDbContext :
         {
             b.ToTable(DCMConsts.DbTablePrefix + "ServiceTypes", DCMConsts.DbSchema);
             b.ConfigureByConvention();
+            b.HasIndex(x=>x.No).IsUnique();
+            b.HasIndex(x => x.ServiceTypeValue).IsUnique();
         });
         
         builder.Entity<LineStatusCode>(b =>
         {
             b.ToTable(DCMConsts.DbTablePrefix + "LineStatusCodes", DCMConsts.DbSchema);
             b.ConfigureByConvention();
+            b.HasIndex(x=>x.Code).IsUnique();
         });
         
         builder.Entity<JobCode>(b =>
         {
             b.ToTable(DCMConsts.DbTablePrefix + "JobCodes", DCMConsts.DbSchema);
             b.ConfigureByConvention();
+            b.HasIndex(x=>x.Code).IsUnique();
+            b.HasIndex(x=>x.No).IsUnique();
         });
         
         builder.Entity<IdentityType>(b =>
         {
             b.ToTable(DCMConsts.DbTablePrefix + "IdentityTypes", DCMConsts.DbSchema);
             b.ConfigureByConvention();
+            b.HasIndex(x=>x.No).IsUnique();
         });
         
         builder.Entity<CustomerMovementCode>(b =>
         {
             b.ToTable(DCMConsts.DbTablePrefix + "CustomerMovementCodes", DCMConsts.DbSchema);
             b.ConfigureByConvention();
+            b.HasIndex(x=>x.Code).IsUnique();
+            b.HasIndex(x => x.Description).IsUnique();
         });
 
         builder.Entity<Country>(b =>
         {
             b.ToTable(DCMConsts.DbTablePrefix + "Countries", DCMConsts.DbSchema);
             b.ConfigureByConvention();
-            //b.HasMany<City>().WithOne().HasForeignKey(x => x.CountryId);
+            b.HasIndex(x => x.Name).IsUnique();
+            b.HasIndex(x => x.Code).IsUnique();
         });
 
         builder.Entity<City>(b =>
         {
             b.ToTable(DCMConsts.DbTablePrefix + "Cities", DCMConsts.DbSchema);
             b.ConfigureByConvention();
+            b.HasIndex(x => x.Name).IsUnique();
         });
 
         builder.Entity<District>(b =>
         {
             b.ToTable(DCMConsts.DbTablePrefix + "Districts", DCMConsts.DbSchema);
             b.ConfigureByConvention();
+            b.HasIndex(x => x.Name).IsUnique();
         });
         
         builder.Entity<Parameter>(b =>
         {
             b.ToTable(DCMConsts.DbTablePrefix + "Parameters", DCMConsts.DbSchema);
             b.ConfigureByConvention();
+            b.HasIndex(x=>x.Name).IsUnique();
         });
     }
 }

@@ -1,5 +1,7 @@
 using Dev.DCM.Entities.IdentityTypes;
 using System;
+using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -23,4 +25,23 @@ public class IdentityTypeAppService :
         UpdatePolicyName = Permissions.DCMPermissions.IdentityTypes.Edit;
         DeletePolicyName = Permissions.DCMPermissions.IdentityTypes.Delete;
     }
+
+    public override async Task<IdentityTypeDto> CreateAsync(CreateUpdateIdentityTypeDto input)
+    {
+        await IsIdentityTypeExists(input.No);
+        return await base.CreateAsync(input);
+    }
+
+    #region Validation
+
+    private async Task IsIdentityTypeExists(int no)
+    {
+        var existing = await Repository.AnyAsync(c => c.No == no);
+        if (!existing)
+        {
+            throw new UserFriendlyException(message: L["AlreadyExists"]);
+        }
+    }
+
+    #endregion
 }

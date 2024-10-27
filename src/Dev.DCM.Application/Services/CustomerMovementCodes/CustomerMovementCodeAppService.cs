@@ -1,5 +1,7 @@
 using Dev.DCM.Entities.CustomerMovementCodes;
 using System;
+using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -23,4 +25,23 @@ public class CustomerMovementCodeAppService :
         UpdatePolicyName = Permissions.DCMPermissions.CustomerMovementCodes.Edit;
         DeletePolicyName = Permissions.DCMPermissions.CustomerMovementCodes.Delete;
     }
+
+    public override async Task<CustomerMovementCodeDto> CreateAsync(CreateUpdateCustomerMovementCodeDto input)
+    {
+        await IsCustomerMovementCodeExists(input.Code, input.Description);
+        return await base.CreateAsync(input);
+    }
+    
+    #region Validation
+
+    private async Task IsCustomerMovementCodeExists(string code, string? description)
+    {
+        var existing = await Repository.AnyAsync(c => c.Code == code || c.Description == description);
+        if (!existing)
+        {
+            throw new UserFriendlyException(message: L["AlreadyExists"]);
+        }
+    }
+
+    #endregion
 }

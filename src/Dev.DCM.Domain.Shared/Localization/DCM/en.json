@@ -131,6 +131,7 @@
     "Select": "Select",
     "Locations": "Locations",
     "IsActive": "Is Active",
-    "PhoneWithSearch": "To make a phone call, enter the number in the box below and make the call."
+    "PhoneWithSearch": "To make a phone call, enter the number in the box below and make the call.",
+    "AlreadyExists" : "A record with the same value already exists. Please enter a different value."
   }
 }
