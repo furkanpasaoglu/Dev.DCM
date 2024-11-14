@@ -1,5 +1,4 @@
-﻿using Dev.DCM.Entities.Phones;
-using Dev.DCM.Entities.Sales;
+﻿using Dev.DCM.Entities.Lines;
 
 namespace Dev.DCM.Entities.Subscribers;
 
@@ -118,10 +117,9 @@ public class Subscriber : FullAuditedEntity<Guid>
     /// </summary>
     public Address? EmailAddress { get; set; }
     
-    /// <summary>
-    /// Bir Abonenin birden fazla telefonu olabilir.
-    /// </summary>
-    public ICollection<Phone> Phones { get; set; } = new List<Phone>();
-    
-    public ICollection<Sale> Sales { get; set; } = new List<Sale>();
+    public ICollection<Line> Lines { get; set; } = new List<Line>();
+
+
+    public Guid AuthorizedPersonId { get; set; }
+    public AuthorizedPerson AuthorizedPerson { get; set; }
 }

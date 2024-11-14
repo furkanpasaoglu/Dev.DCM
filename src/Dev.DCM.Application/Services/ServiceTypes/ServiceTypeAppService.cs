@@ -19,11 +19,11 @@ public class ServiceTypeAppService :
 {
     public ServiceTypeAppService(IRepository<ServiceType, Guid> repository) : base(repository)
     {
-        GetPolicyName = Permissions.DCMPermissions.ServiceTypes.Default;
-        GetListPolicyName = Permissions.DCMPermissions.ServiceTypes.Default;
-        CreatePolicyName = Permissions.DCMPermissions.ServiceTypes.Create;
-        UpdatePolicyName = Permissions.DCMPermissions.ServiceTypes.Edit;
-        DeletePolicyName = Permissions.DCMPermissions.ServiceTypes.Delete;
+        GetPolicyName = Permissions.DCMPermissions.Types.ServiceTypes.Default;
+        GetListPolicyName = Permissions.DCMPermissions.Types.ServiceTypes.Default;
+        CreatePolicyName = Permissions.DCMPermissions.Types.ServiceTypes.Create;
+        UpdatePolicyName = Permissions.DCMPermissions.Types.ServiceTypes.Edit;
+        DeletePolicyName = Permissions.DCMPermissions.Types.ServiceTypes.Delete;
     }
 
     public override async Task<ServiceTypeDto> CreateAsync(CreateUpdateServiceTypeDto input)
@@ -37,7 +37,7 @@ public class ServiceTypeAppService :
     private async Task IsServiceTypeExists(int no, string serviceTypeValue)
     {
         var existing = await Repository.AnyAsync(c =>c.No == no || c.ServiceTypeValue == serviceTypeValue);
-        if (!existing)
+        if (existing)
         {
             throw new UserFriendlyException(message: L["AlreadyExists"]);
         }

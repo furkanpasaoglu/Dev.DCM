@@ -19,11 +19,11 @@ public class IdentityTypeAppService :
 {
     public IdentityTypeAppService(IRepository<IdentityType, Guid> repository) : base(repository)
     {
-        GetPolicyName = Permissions.DCMPermissions.IdentityTypes.Default;
-        GetListPolicyName = Permissions.DCMPermissions.IdentityTypes.Default;
-        CreatePolicyName = Permissions.DCMPermissions.IdentityTypes.Create;
-        UpdatePolicyName = Permissions.DCMPermissions.IdentityTypes.Edit;
-        DeletePolicyName = Permissions.DCMPermissions.IdentityTypes.Delete;
+        GetPolicyName = Permissions.DCMPermissions.Types.IdentityTypes.Default;
+        GetListPolicyName = Permissions.DCMPermissions.Types.IdentityTypes.Default;
+        CreatePolicyName = Permissions.DCMPermissions.Types.IdentityTypes.Create;
+        UpdatePolicyName = Permissions.DCMPermissions.Types.IdentityTypes.Edit;
+        DeletePolicyName = Permissions.DCMPermissions.Types.IdentityTypes.Delete;
     }
 
     public override async Task<IdentityTypeDto> CreateAsync(CreateUpdateIdentityTypeDto input)
@@ -37,7 +37,7 @@ public class IdentityTypeAppService :
     private async Task IsIdentityTypeExists(int no)
     {
         var existing = await Repository.AnyAsync(c => c.No == no);
-        if (!existing)
+        if (existing)
         {
             throw new UserFriendlyException(message: L["AlreadyExists"]);
         }

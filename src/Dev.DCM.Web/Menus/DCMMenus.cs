@@ -3,19 +3,28 @@
 public class DCMMenus
 {
     private const string Prefix = "DCM";
+
+    // Ana Menü
     public const string Home = Prefix + ".Home";
 
-    //Add your menu items here...
+    // Türler Menüsü
     public const string Types = Prefix + ".Types";
-    public const string ServiceTypes = Prefix + ".ServiceType";
-    public const string LineStatusCodes = Prefix + ".LineStatusCode";
-    public const string CustomerMovementCodes = Prefix + ".CustomerMovementCode";
-    public const string IdentityTypes = Prefix + ".IdentityType";
-    public const string JobCodes = Prefix + ".JobCode";
-    public const string Locations = Prefix + ".Location";
-    public const string Districts = Prefix + ".District";
-    public const string Cities = Prefix + ".City";
-    public const string Countries = Prefix + ".Country";
-    public const string Parameters = Prefix + ".Parameter";
-    public const string TenantDetails = Prefix + ".TenantDetail";
+    public const string ServiceTypes = Prefix + ".ServiceTypes";
+    public const string LineStatusCodes = Prefix + ".LineStatusCodes";
+    public const string CustomerMovementCodes = Prefix + ".CustomerMovementCodes";
+    public const string IdentityTypes = Prefix + ".IdentityTypes";
+    public const string JobCodes = Prefix + ".JobCodes";
+
+    // Lokasyon Menüsü
+    public const string LocationMenu = Prefix + ".Locations";
+    public const string Countries = LocationMenu + ".Countries";
+    public const string Cities = LocationMenu + ".Cities";
+    public const string Districts = LocationMenu + ".Districts";
+
+    // Parametreler Menüsü
+    public const string Parameters = Prefix + ".Parameters";
+
+    // Kiracı Detayları Menüsü
+    public const string TenantDetails = Prefix + ".TenantDetails";
 }
+

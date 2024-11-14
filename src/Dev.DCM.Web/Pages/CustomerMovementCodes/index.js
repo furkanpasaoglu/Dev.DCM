@@ -38,14 +38,14 @@ $(function () {
                             [
                                 {
                                     text: l('Edit'),
-                                    visible: abp.auth.isGranted('DCM.CustomerMovementCode.Edit'),
+                                    visible: abp.auth.isGranted('DCM.Types.CustomerMovementCodes.Edit'),
                                     action: function (data) {
                                         editModal.open({ id: data.record.id });
                                     }
                                 },
                                 {
                                     text: l('Delete'),
-                                    visible: abp.auth.isGranted('DCM.CustomerMovementCode.Delete'),
+                                    visible: abp.auth.isGranted('DCM.CustomerMovementCodes.Delete'),
                                     confirmMessage: function (data) {
                                         return l('CustomerMovementCodeDeletionConfirmationMessage', data.record.name);
                                     },

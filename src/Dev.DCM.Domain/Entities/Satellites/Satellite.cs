@@ -1,4 +1,6 @@
-﻿namespace Dev.DCM.Entities.Satellites;
+﻿using Dev.DCM.Entities.Lines;
+
+namespace Dev.DCM.Entities.Satellites;
 
 /// <summary>
 /// UYDU
@@ -99,4 +101,6 @@ public class Satellite : FullAuditedEntity<Guid>
     /// UYDU_TELEFON
     /// </summary>
     public ICollection<SatellitePhone>? SatellitePhones { get; set; } = new List<SatellitePhone>();
+    
+    public Guid LineId { get; set; }
 }

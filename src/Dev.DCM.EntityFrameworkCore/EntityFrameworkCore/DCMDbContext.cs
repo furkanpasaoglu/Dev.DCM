@@ -14,15 +14,12 @@ using Dev.DCM.Entities.FixedLines;
 using Dev.DCM.Entities.GsmDetails;
 using Dev.DCM.Entities.IdentityDocuments;
 using Dev.DCM.Entities.IdentityTypes;
-using Dev.DCM.Entities.Institutions;
 using Dev.DCM.Entities.InternetServices;
 using Dev.DCM.Entities.JobCodes;
 using Dev.DCM.Entities.Lines;
 using Dev.DCM.Entities.LineStatusCodes;
 using Dev.DCM.Entities.Parameters;
-using Dev.DCM.Entities.Phones;
 using Dev.DCM.Entities.ResidentialAddresses;
-using Dev.DCM.Entities.Sales;
 using Dev.DCM.Entities.SatellitePhones;
 using Dev.DCM.Entities.Satellites;
 using Dev.DCM.Entities.ServiceTypes;
@@ -92,7 +89,6 @@ public class DCMDbContext :
     public DbSet<FixedLine> FixedLines { get; set; }
     public DbSet<GsmDetail> GsmDetails { get; set; }
     public DbSet<IdentityDocument> IdentityDocuments { get; set; }
-    public DbSet<Institution> Institutions { get; set; }
     public DbSet<InternetService> InternetServices { get; set; }
     public DbSet<Line> Lines { get; set; }
     public DbSet<ResidentialAddress> ResidentialAddresses { get; set; }
@@ -103,8 +99,6 @@ public class DCMDbContext :
     public DbSet<Updater> Updaters { get; set; }
     public DbSet<Branch> Branches { get; set; }
     public DbSet<Activation> Activations { get; set; }
-    public DbSet<Phone> Phones { get; set; }
-    public DbSet<Sale> Sales { get; set; }
     public DbSet<Country> Countries { get; set; }
     public DbSet<City> Cities { get; set; }
     public DbSet<District> Districts { get; set; }
@@ -193,11 +187,6 @@ public class DCMDbContext :
             b.ConfigureByConvention();
         });
           
-        builder.Entity<Institution>(b =>
-        {
-            b.ToTable(DCMConsts.DbTablePrefix + "Institutions", DCMConsts.DbSchema);
-            b.ConfigureByConvention();
-        });
           
         builder.Entity<InternetService>(b =>
         {
@@ -259,17 +248,7 @@ public class DCMDbContext :
             b.ConfigureByConvention();
         });
 
-        builder.Entity<Phone>(b =>
-        {
-            b.ToTable(DCMConsts.DbTablePrefix + "Phones", DCMConsts.DbSchema);
-            b.ConfigureByConvention();
-        });
 
-        builder.Entity<Sale>(b =>
-        {
-            b.ToTable(DCMConsts.DbTablePrefix + "Sales", DCMConsts.DbSchema);
-            b.ConfigureByConvention();
-        });
 
         builder.Entity<ServiceType>(b =>
         {

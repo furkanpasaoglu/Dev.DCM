@@ -24,7 +24,7 @@
                 <abp-card-title>@L["JobCodes"]</abp-card-title>
             </abp-column>
             <abp-column size-md="_6" class="text-end">
-                @if (await AuthorizationService.IsGrantedAsync(DCMPermissions.JobCodes.Create))
+                @if (await AuthorizationService.IsGrantedAsync(DCMPermissions.Types.JobCodes.Create))
                 {
                     <abp-button id="NewJobCodeButton"
                                 text="@L["NewJobCode"].Value"

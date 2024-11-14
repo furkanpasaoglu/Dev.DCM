@@ -19,11 +19,11 @@ public class JobCodeAppService :
 {
     public JobCodeAppService(IRepository<JobCode, Guid> repository) : base(repository)
     {
-        GetPolicyName = Permissions.DCMPermissions.JobCodes.Default;
-        GetListPolicyName = Permissions.DCMPermissions.JobCodes.Default;
-        CreatePolicyName = Permissions.DCMPermissions.JobCodes.Create;
-        UpdatePolicyName = Permissions.DCMPermissions.JobCodes.Edit;
-        DeletePolicyName = Permissions.DCMPermissions.JobCodes.Delete;
+        GetPolicyName = Permissions.DCMPermissions.Types.JobCodes.Default;
+        GetListPolicyName = Permissions.DCMPermissions.Types.JobCodes.Default;
+        CreatePolicyName = Permissions.DCMPermissions.Types.JobCodes.Create;
+        UpdatePolicyName = Permissions.DCMPermissions.Types.JobCodes.Edit;
+        DeletePolicyName = Permissions.DCMPermissions.Types.JobCodes.Delete;
     }
 
     public override async Task<JobCodeDto> CreateAsync(CreateUpdateJobCodeDto input)
@@ -37,7 +37,7 @@ public class JobCodeAppService :
     private async Task IsJobCodeExists(int no, string? code)
     {
         var existing = await Repository.AnyAsync(c => c.No == no || c.Code == code);
-        if (!existing)
+        if (existing)
         {
             throw new UserFriendlyException(message: L["AlreadyExists"]);
         }

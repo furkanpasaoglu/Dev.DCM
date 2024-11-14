@@ -22,159 +22,160 @@ public class DCMMenuContributor : IMenuContributor
 
     private Task ConfigureMainMenuAsync(MenuConfigurationContext context)
     {
-        var administration = context.Menu.GetAdministration();
-        var l = context.GetLocalizer<DCMResource>();
+        var administrationMenu = context.Menu.GetAdministration();
+        var localizer = context.GetLocalizer<DCMResource>();
 
-        // Home
-        context.Menu.Items.Insert(
-            0,
+        // Ana Sayfa
+        context.Menu.Items.Add(
             new ApplicationMenuItem(
                 DCMMenus.Home,
-                l["Menu:Home"],
-                "~/",
+                localizer["Menu:Home"],
+                url: "~/",
                 icon: "fas fa-home",
                 order: 0
             )
         );
-        
-        context.Menu.Items.Insert(
-            1,
+
+        // Parametreler        
+        context.Menu.Items.Add(
             new ApplicationMenuItem(
                 DCMMenus.Parameters,
-                l["Menu:Parameters"],
-                "/Parameters",
-                icon: "fas fa-cogs",
-                order: 0,
-                groupName: DCMMenus.Parameters
-            ).RequirePermissions(requiresAll:false, 
-                DCMPermissions.Parameters.Default)
+                localizer["Menu:Parameters"],
+                url: "/Parameters",
+                icon: "fas fa-cogs"
+            ).RequirePermissions(requiresAll: false, DCMPermissions.Parameters.Default)
         );
-        
-        context.Menu.Items.Insert(
-            1,
+
+        // Kiracı Detayları
+        context.Menu.Items.Add(
             new ApplicationMenuItem(
                 DCMMenus.TenantDetails,
-                l["Menu:TenantDetails"],
-                "/TenantDetails",
-                icon: "fas fa-building",
-                order: 0,
-                groupName: DCMMenus.TenantDetails
-            ).RequirePermissions(requiresAll:false,
-                DCMPermissions.TenantDetail.Default)
+                localizer["Menu:TenantDetails"],
+                url: "/TenantDetails",
+                icon: "fas fa-building"
+            ).RequirePermissions(requiresAll: false, DCMPermissions.TenantDetails.Default)
         );
-        
-        //Locations
-        context.Menu.Items.Insert(
-            2, new ApplicationMenuItem(
-                DCMMenus.Locations,
-                l["Menu:Locations"],
-                "~/",
-                icon: "fas fa-map-marker-alt",
-                order: 1,
-                groupName: DCMMenus.Locations
-                ).RequirePermissions(requiresAll:false, 
-                    DCMPermissions.Districts.Default, 
-                    DCMPermissions.Cities.Default, 
-                    DCMPermissions.Countries.Default)
-                .AddItem(new ApplicationMenuItem(
-                    DCMMenus.Countries,
-                    l["Menu:Countries"],
-                    "/Countries",
-                    icon: "fas fa-flag",
-                    order: 1,
-                    requiredPermissionName: DCMPermissions.Countries.Default
-                ))
-                .AddItem(new ApplicationMenuItem(
-                    DCMMenus.Cities,
-                    l["Menu:Cities"],
-                    "/Cities",
-                    icon: "fas fa-city",
-                    order: 2,
-                    requiredPermissionName: DCMPermissions.Cities.Default
-                ))
-                .AddItem(new ApplicationMenuItem(
-                    DCMMenus.Districts,
-                    l["Menu:Districts"],
-                    "/Districts",
-                    icon: "fas fa-map-marked-alt",
-                    order: 3,
-                    requiredPermissionName: DCMPermissions.Districts.Default
-                ))
-            );
-        
-        // Types
-        context.Menu.Items.Insert(
-            3,new ApplicationMenuItem(
-                DCMMenus.Types,
-                l["Menu:Types"],
-                "~/",
-                icon: "fas fa-list",
-                order: 1,
-                groupName: DCMMenus.Types
-            ).RequirePermissions(requiresAll:false, 
-                DCMPermissions.ServiceTypes.Default, 
-                DCMPermissions.LineStatusCodes.Default, 
-                DCMPermissions.CustomerMovementCodes.Default, 
-                DCMPermissions.IdentityTypes.Default, 
-                DCMPermissions.JobCodes.Default)
-            .AddItem(new ApplicationMenuItem(
-                DCMMenus.ServiceTypes,
-                l["Menu:ServiceTypes"],
-                "/ServiceTypes",
-                icon: "fas fa-concierge-bell",
-                order: 1,
-                requiredPermissionName: DCMPermissions.ServiceTypes.Default
-            ))
-            .AddItem( new ApplicationMenuItem(
-                DCMMenus.LineStatusCodes,
-                l["Menu:LineStatusCodes"],
-                "/LineStatusCodes",
-                icon: "fas fa-signal",
-                order: 2,
-                requiredPermissionName: DCMPermissions.LineStatusCodes.Default
-            ))
-            .AddItem( new ApplicationMenuItem(
-                DCMMenus.CustomerMovementCodes,
-                l["Menu:CustomerMovementCodes"],
-                "/CustomerMovementCodes",
-                icon: "fas fa-exchange-alt",
-                order: 3,
-                requiredPermissionName: DCMPermissions.CustomerMovementCodes.Default
-            ))
-            .AddItem(new ApplicationMenuItem(
-                DCMMenus.IdentityTypes,
-                l["Menu:IdentityTypes"],
-                "/IdentityTypes",
-                icon: "fas fa-id-card",
-                order: 4,
-                requiredPermissionName: DCMPermissions.IdentityTypes.Default
-            ))
-            .AddItem(new ApplicationMenuItem(
-                DCMMenus.JobCodes,
-                l["Menu:JobCodes"],
-                "/JobCodes",
-                icon: "fas fa-briefcase",
-                order: 5,
-                requiredPermissionName: DCMPermissions.JobCodes.Default
-            ))
-        );
-        
-        context.Menu.Items.Add(new ApplicationMenuItem(DCMMenus.Parameters, l["Menu:Parameters"]));
-        context.Menu.Groups.Add(new ApplicationMenuGroup(DCMMenus.Locations, l["Menu:Locations"]));
-        context.Menu.Groups.Add(new ApplicationMenuGroup(DCMMenus.Types, l["Menu:Types"]));
-       
 
+        // Lokasyonlar Menüsü
+        var locationsMenu = new ApplicationMenuItem(
+            DCMMenus.LocationMenu,
+            localizer["Menu:Locations"],
+            icon: "fas fa-map-marker-alt"
+        ).RequirePermissions(requiresAll: false,
+            DCMPermissions.Locations.Countries.Default,
+            DCMPermissions.Locations.Cities.Default,
+            DCMPermissions.Locations.Districts.Default
+        );
+
+        locationsMenu.AddItem(
+            new ApplicationMenuItem(
+                DCMMenus.Countries,
+                localizer["Menu:Countries"],
+                url: "/Countries",
+                icon: "fas fa-flag",
+                requiredPermissionName: DCMPermissions.Locations.Countries.Default
+            )
+        );
+        locationsMenu.AddItem(
+            new ApplicationMenuItem(
+                DCMMenus.Cities,
+                localizer["Menu:Cities"],
+                url: "/Cities",
+                icon: "fas fa-city",
+                requiredPermissionName: DCMPermissions.Locations.Cities.Default
+            )
+        );
+        locationsMenu.AddItem(
+            new ApplicationMenuItem(
+                DCMMenus.Districts,
+                localizer["Menu:Districts"],
+                url: "/Districts",
+                icon: "fas fa-map-marked-alt",
+                requiredPermissionName: DCMPermissions.Locations.Districts.Default
+            )
+        );
+
+        context.Menu.Items.Add(locationsMenu);
+
+        // Türler Menüsü
+        var typesMenu = new ApplicationMenuItem(
+            DCMMenus.Types,
+            localizer["Menu:Types"],
+            icon: "fas fa-list"
+        ).RequirePermissions(requiresAll: false,
+            DCMPermissions.Types.ServiceTypes.Default,
+            DCMPermissions.Types.LineStatusCodes.Default,
+            DCMPermissions.Types.CustomerMovementCodes.Default,
+            DCMPermissions.Types.IdentityTypes.Default,
+            DCMPermissions.Types.JobCodes.Default
+        );
+
+        typesMenu.AddItem(
+            new ApplicationMenuItem(
+                DCMMenus.ServiceTypes,
+                localizer["Menu:ServiceTypes"],
+                url: "/ServiceTypes",
+                icon: "fas fa-concierge-bell",
+                requiredPermissionName: DCMPermissions.Types.ServiceTypes.Default
+            )
+        );
+        typesMenu.AddItem(
+            new ApplicationMenuItem(
+                DCMMenus.LineStatusCodes,
+                localizer["Menu:LineStatusCodes"],
+                url: "/LineStatusCodes",
+                icon: "fas fa-signal",
+                requiredPermissionName: DCMPermissions.Types.LineStatusCodes.Default
+            )
+        );
+        typesMenu.AddItem(
+            new ApplicationMenuItem(
+                DCMMenus.CustomerMovementCodes,
+                localizer["Menu:CustomerMovementCodes"],
+                url: "/CustomerMovementCodes",
+                icon: "fas fa-exchange-alt",
+                requiredPermissionName: DCMPermissions.Types.CustomerMovementCodes.Default
+            )
+        );
+        typesMenu.AddItem(
+            new ApplicationMenuItem(
+                DCMMenus.IdentityTypes,
+                localizer["Menu:IdentityTypes"],
+                url: "/IdentityTypes",
+                icon: "fas fa-id-card",
+                requiredPermissionName: DCMPermissions.Types.IdentityTypes.Default
+            )
+        );
+        typesMenu.AddItem(
+            new ApplicationMenuItem(
+                DCMMenus.JobCodes,
+                localizer["Menu:JobCodes"],
+                url: "/JobCodes",
+                icon: "fas fa-briefcase",
+                requiredPermissionName: DCMPermissions.Types.JobCodes.Default
+            )
+        );
+
+        context.Menu.Items.Add(typesMenu);
+
+        // Menü Grupları Ekleme
+        context.Menu.Groups.Add(new ApplicationMenuGroup(DCMMenus.LocationMenu, localizer["Menu:Locations"]));
+        context.Menu.Groups.Add(new ApplicationMenuGroup(DCMMenus.Types, localizer["Menu:Types"]));
+        context.Menu.Groups.Add(new ApplicationMenuGroup(DCMMenus.Parameters, localizer["Menu:Parameters"]));
+
+        // Çok Kiracılı Yapılandırma
         if (MultiTenancyConsts.IsEnabled)
         {
-            administration.SetSubItemOrder(TenantManagementMenuNames.GroupName, 1);
+            administrationMenu.SetSubItemOrder(TenantManagementMenuNames.GroupName, 1);
         }
         else
         {
-            administration.TryRemoveMenuItem(TenantManagementMenuNames.GroupName);
+            administrationMenu.TryRemoveMenuItem(TenantManagementMenuNames.GroupName);
         }
 
-        administration.SetSubItemOrder(IdentityMenuNames.GroupName, 2);
-        administration.SetSubItemOrder(SettingManagementMenuNames.GroupName, 3);
+        // Yönetim Menü Sıralamaları
+        administrationMenu.SetSubItemOrder(IdentityMenuNames.GroupName, 2);
+        administrationMenu.SetSubItemOrder(SettingManagementMenuNames.GroupName, 3);
 
         return Task.CompletedTask;
     }

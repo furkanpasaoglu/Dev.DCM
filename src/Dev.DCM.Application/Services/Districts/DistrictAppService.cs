@@ -21,11 +21,11 @@ public class DistrictAppService :
 {
     public DistrictAppService(IRepository<District, Guid> repository) : base(repository)
     {
-        GetPolicyName = Permissions.DCMPermissions.Districts.Default;
-        GetListPolicyName = Permissions.DCMPermissions.Districts.Default;
-        CreatePolicyName = Permissions.DCMPermissions.Districts.Create;
-        UpdatePolicyName = Permissions.DCMPermissions.Districts.Edit;
-        DeletePolicyName = Permissions.DCMPermissions.Districts.Delete;
+        GetPolicyName = Permissions.DCMPermissions.Locations.Districts.Default;
+        GetListPolicyName = Permissions.DCMPermissions.Locations.Districts.Default;
+        CreatePolicyName = Permissions.DCMPermissions.Locations.Districts.Create;
+        UpdatePolicyName = Permissions.DCMPermissions.Locations.Districts.Edit;
+        DeletePolicyName = Permissions.DCMPermissions.Locations.Districts.Delete;
     }
 
     public override async Task<PagedResultDto<DistrictDto>> GetListAsync(PagedAndSortedResultRequestDto input)
@@ -51,7 +51,7 @@ public class DistrictAppService :
     private async Task IsDistrictExists(string name)
     {
         var existing = await Repository.AnyAsync(c => c.Name == name);
-        if (!existing)
+        if (existing)
         {
             throw new UserFriendlyException(message: L["AlreadyExists"]);
         }

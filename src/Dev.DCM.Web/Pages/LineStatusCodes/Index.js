@@ -16,7 +16,8 @@ $(function () {
             columnDefs: [
                 {
                     title: l('Id'),
-                    data: "id"
+                    data: "id",
+                    visible: false
                 },
                 {
                     title: l('Code'),
@@ -37,14 +38,14 @@ $(function () {
                             [
                                 {
                                     text: l('Edit'),
-                                    visible: abp.auth.isGranted('DCM.LineStatusCode.Edit'),
+                                    visible: abp.auth.isGranted('DCM.Types.LineStatusCodes.Edit'),
                                     action: function (data) {
                                         editModal.open({ id: data.record.id });
                                     }
                                 },
                                 {
                                     text: l('Delete'),
-                                    visible: abp.auth.isGranted('DCM.LineStatusCode.Delete'),
+                                    visible: abp.auth.isGranted('DCM.Types.LineStatusCodes.Delete'),
                                     confirmMessage: function (data) {
                                         return l('LineStatusCodeDeletionConfirmationMessage', data.record.name);
                                     },

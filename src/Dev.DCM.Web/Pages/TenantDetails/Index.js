@@ -42,14 +42,14 @@ $(function () {
                             [
                                 {
                                     text: l('Edit'),
-                                    visible: abp.auth.isGranted('DCM.TenantDetail.Edit'),
+                                    visible: abp.auth.isGranted('DCM.TenantDetails.Edit'),
                                     action: function (data) {
                                         editModal.open({ id: data.record.id });
                                     }
                                 },
                                 {
                                     text: l('Delete'),
-                                    visible: abp.auth.isGranted('DCM.TenantDetail.Delete'),
+                                    visible: abp.auth.isGranted('DCM.TenantDetails.Delete'),
                                     confirmMessage: function (data) {
                                         return l('TenantDetailsDeletionConfirmationMessage', data.record.tenant.name);
                                     },

@@ -25,14 +25,13 @@ public class AuthorizedPerson : FullAuditedEntity<Guid>
     /// </summary>
     public string? Phone { get; set; }
 
-
     /// <summary>
-    /// Kurum ID'si (KURUM_ID)
+    /// KURUM_ADRES
     /// </summary>
-    public Guid InstitutionId { get; set; }
+    public string? InstitutionAddress { get; set; }
 
-    /// <summary>
-    /// KURUM_YETKILI
-    /// </summary>
-    public Institution Institution { get; set; } = default!;
+
+    public Guid SubscriberId { get; set; }
+
+
 }

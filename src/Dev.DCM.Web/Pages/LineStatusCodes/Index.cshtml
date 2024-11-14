@@ -24,7 +24,7 @@
                 <abp-card-title>@L["LineStatusCodes"]</abp-card-title>
             </abp-column>
             <abp-column size-md="_6" class="text-end">
-                @if (await AuthorizationService.IsGrantedAsync(DCMPermissions.LineStatusCodes.Create))
+                @if (await AuthorizationService.IsGrantedAsync(DCMPermissions.Types.LineStatusCodes.Create))
                 {
                     <abp-button id="NewLineStatusCodeButton"
                                 text="@L["NewLineStatusCode"].Value"

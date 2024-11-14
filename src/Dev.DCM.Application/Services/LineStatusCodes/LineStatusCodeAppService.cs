@@ -19,11 +19,11 @@ public class LineStatusCodeAppService :
 {
     public LineStatusCodeAppService(IRepository<LineStatusCode, Guid> repository) : base(repository)
     {
-        GetPolicyName = Permissions.DCMPermissions.LineStatusCodes.Default;
-        GetListPolicyName = Permissions.DCMPermissions.LineStatusCodes.Default;
-        CreatePolicyName = Permissions.DCMPermissions.LineStatusCodes.Create;
-        UpdatePolicyName = Permissions.DCMPermissions.LineStatusCodes.Edit;
-        DeletePolicyName = Permissions.DCMPermissions.LineStatusCodes.Delete;
+        GetPolicyName = Permissions.DCMPermissions.Types.LineStatusCodes.Default;
+        GetListPolicyName = Permissions.DCMPermissions.Types.LineStatusCodes.Default;
+        CreatePolicyName = Permissions.DCMPermissions.Types.LineStatusCodes.Create;
+        UpdatePolicyName = Permissions.DCMPermissions.Types.LineStatusCodes.Edit;
+        DeletePolicyName = Permissions.DCMPermissions.Types.LineStatusCodes.Delete;
     }
 
     public override async Task<LineStatusCodeDto> CreateAsync(CreateUpdateLineStatusCodeDto input)
@@ -37,7 +37,7 @@ public class LineStatusCodeAppService :
     private async Task IsLineStatusCodeExists(string code)
     {
         var existing = await Repository.AnyAsync(c =>c.Code == code);
-        if (!existing)
+        if (existing)
         {
             throw new UserFriendlyException(message: L["AlreadyExists"]);
         }

@@ -1,4 +1,6 @@
-﻿namespace Dev.DCM.Entities.InternetServices;
+﻿using Dev.DCM.Entities.Lines;
+
+namespace Dev.DCM.Entities.InternetServices;
 
 /// <summary>
 /// ISS
@@ -19,4 +21,6 @@ public class InternetService : FullAuditedEntity<Guid>
     /// ISS_POP_BILGISI
     /// </summary>
     public string? PopInfo { get; set; }
+    
+    public Guid LineId { get; set; }
 }

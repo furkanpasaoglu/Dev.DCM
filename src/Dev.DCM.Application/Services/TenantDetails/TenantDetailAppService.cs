@@ -20,11 +20,11 @@ public class TenantDetailAppService :
 {
     public TenantDetailAppService(IRepository<TenantDetail, Guid> repository) : base(repository)
     {
-        GetPolicyName = Permissions.DCMPermissions.TenantDetail.Default;
-        GetListPolicyName = Permissions.DCMPermissions.TenantDetail.Default;
-        CreatePolicyName = Permissions.DCMPermissions.TenantDetail.Create;
-        UpdatePolicyName = Permissions.DCMPermissions.TenantDetail.Edit;
-        DeletePolicyName = Permissions.DCMPermissions.TenantDetail.Delete;
+        GetPolicyName = Permissions.DCMPermissions.TenantDetails.Default;
+        GetListPolicyName = Permissions.DCMPermissions.TenantDetails.Default;
+        CreatePolicyName = Permissions.DCMPermissions.TenantDetails.Create;
+        UpdatePolicyName = Permissions.DCMPermissions.TenantDetails.Edit;
+        DeletePolicyName = Permissions.DCMPermissions.TenantDetails.Delete;
     }
     
     public override async Task<PagedResultDto<TenantDetailDto>> GetListAsync(PagedAndSortedResultRequestDto input)

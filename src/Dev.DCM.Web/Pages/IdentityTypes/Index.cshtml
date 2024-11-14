@@ -24,7 +24,7 @@
                 <abp-card-title>@L["IdentityTypes"]</abp-card-title>
             </abp-column>
             <abp-column size-md="_6" class="text-end">
-                @if (await AuthorizationService.IsGrantedAsync(DCMPermissions.IdentityTypes.Create))
+                @if (await AuthorizationService.IsGrantedAsync(DCMPermissions.Types.IdentityTypes.Create))
                 {
                     <abp-button id="NewIdentityTypeButton"
                                 text="@L["NewIdentityType"].Value"

@@ -1,3 +1,5 @@
+using Dev.DCM.Entities.Lines;
+
 namespace Dev.DCM.Entities.Aihs;
 
 /// <summary>
@@ -83,4 +85,6 @@ public class Aih  : FullAuditedEntity<Guid>
     /// ABONE.ADRES.TESIS_IC_KAPI_NO_B
     /// </summary>
     public string? SubscriberApartmentNoB { get; set; }
+    
+    public Guid LineId { get; set; }
 }

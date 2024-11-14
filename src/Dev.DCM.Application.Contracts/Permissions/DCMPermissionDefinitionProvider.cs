@@ -7,66 +7,68 @@ namespace Dev.DCM.Permissions;
 
 public class DCMPermissionDefinitionProvider : PermissionDefinitionProvider
 {
-    public override void Define(IPermissionDefinitionContext context)
-    {
-        var myGroup = context.AddGroup(DCMPermissions.GroupName, L("Permission:Types"));
-        var locationGroup  =context.AddGroup(DCMPermissions.Locations, L("Permission:Locations"));
-        var parameterGroup = context.AddGroup(DCMPermissions.Parameter, L("Permission:Parameters"));
-        var tenantDetailGroup = context.AddGroup(DCMPermissions.TenantDetails, L("Permission:TenantDetails"));
-        
-        var tenantDetails = tenantDetailGroup.AddPermission(DCMPermissions.TenantDetail.Default, L("Permission:TenantDetail"));
-        tenantDetails.AddChild(DCMPermissions.TenantDetail.Create, L("Permission:TenantDetail.Create"));
-        tenantDetails.AddChild(DCMPermissions.TenantDetail.Edit, L("Permission:TenantDetail.Edit"));
-        tenantDetails.AddChild(DCMPermissions.TenantDetail.Delete, L("Permission:TenantDetail.Delete"));
+public override void Define(IPermissionDefinitionContext context)
+{
+    var myGroup = context.AddGroup(DCMPermissions.GroupName, L("Permission:DCM"));
+    var locationGroup = context.AddGroup(DCMPermissions.LocationPermission, L("Permission:Locations"));
+    var parameterGroup = context.AddGroup(DCMPermissions.ParameterPermission, L("Permission:Parameters"));
+    var tenantDetailGroup = context.AddGroup(DCMPermissions.TenantDetailPermission, L("Permission:TenantDetails"));
 
-        var parameters = parameterGroup.AddPermission(DCMPermissions.Parameters.Default, L("Permission:Parameters"));
-        parameters.AddChild(DCMPermissions.Parameters.Create, L("Permission:Parameter.Create"));
-        parameters.AddChild(DCMPermissions.Parameters.Edit, L("Permission:Parameter.Edit"));
-        parameters.AddChild(DCMPermissions.Parameters.Delete, L("Permission:Parameter.Delete"));
-        
-        var serviceTypes = myGroup.AddPermission(DCMPermissions.ServiceTypes.Default, L("Permission:ServiceTypes"));
-        serviceTypes.AddChild(DCMPermissions.ServiceTypes.Create, L("Permission:ServiceType.Create"));
-        serviceTypes.AddChild(DCMPermissions.ServiceTypes.Edit, L("Permission:ServiceType.Edit"));
-        serviceTypes.AddChild(DCMPermissions.ServiceTypes.Delete, L("Permission:ServiceType.Delete"));
-        
-        var lineStatusCodes = myGroup.AddPermission(DCMPermissions.LineStatusCodes.Default, L("Permission:LineStatusCodes"));
-        lineStatusCodes.AddChild(DCMPermissions.LineStatusCodes.Create, L("Permission:LineStatusCode.Create"));
-        lineStatusCodes.AddChild(DCMPermissions.LineStatusCodes.Edit, L("Permission:LineStatusCode.Edit"));
-        lineStatusCodes.AddChild(DCMPermissions.LineStatusCodes.Delete, L("Permission:LineStatusCode.Delete"));
-        
-        var jobCodes = myGroup.AddPermission(DCMPermissions.JobCodes.Default, L("Permission:JobCodes"));
-        jobCodes.AddChild(DCMPermissions.JobCodes.Create, L("Permission:JobCode.Create"));
-        jobCodes.AddChild(DCMPermissions.JobCodes.Edit, L("Permission:JobCode.Edit"));
-        jobCodes.AddChild(DCMPermissions.JobCodes.Delete, L("Permission:JobCode.Delete"));
-        
-        var identityTypes = myGroup.AddPermission(DCMPermissions.IdentityTypes.Default, L("Permission:IdentityTypes"));
-        identityTypes.AddChild(DCMPermissions.IdentityTypes.Create, L("Permission:IdentityType.Create"));
-        identityTypes.AddChild(DCMPermissions.IdentityTypes.Edit, L("Permission:IdentityType.Edit"));
-        identityTypes.AddChild(DCMPermissions.IdentityTypes.Delete, L("Permission:IdentityType.Delete"));
-        
-        var customerMovementCodes = myGroup.AddPermission(DCMPermissions.CustomerMovementCodes.Default, L("Permission:CustomerMovementCodes"));
-        customerMovementCodes.AddChild(DCMPermissions.CustomerMovementCodes.Create, L("Permission:CustomerMovementCode.Create"));
-        customerMovementCodes.AddChild(DCMPermissions.CustomerMovementCodes.Edit, L("Permission:CustomerMovementCode.Edit"));
-        customerMovementCodes.AddChild(DCMPermissions.CustomerMovementCodes.Delete, L("Permission:CustomerMovementCode.Delete"));
+    // Tenant Detayları İzinleri
+    var tenantDetails = tenantDetailGroup.AddPermission(DCMPermissions.TenantDetails.Default, L("Permission:TenantDetails"));
+    tenantDetails.AddChild(DCMPermissions.TenantDetails.Create, L("Permission:TenantDetails.Create"));
+    tenantDetails.AddChild(DCMPermissions.TenantDetails.Edit, L("Permission:TenantDetails.Edit"));
+    tenantDetails.AddChild(DCMPermissions.TenantDetails.Delete, L("Permission:TenantDetails.Delete"));
 
-        var countries = locationGroup.AddPermission(DCMPermissions.Countries.Default, L("Permission:Countries"));
-        countries.AddChild(DCMPermissions.Countries.Create, L("Permission:Country.Create"));
-        countries.AddChild(DCMPermissions.Countries.Edit, L("Permission:Country.Edit"));
-        countries.AddChild(DCMPermissions.Countries.Delete, L("Permission:Country.Delete"));
-        
-        var cities = locationGroup.AddPermission(DCMPermissions.Cities.Default, L("Permission:Cities"));
-        cities.AddChild(DCMPermissions.Cities.Create, L("Permission:City.Create"));
-        cities.AddChild(DCMPermissions.Cities.Edit, L("Permission:City.Edit"));
-        cities.AddChild(DCMPermissions.Cities.Delete, L("Permission:City.Delete"));
-        
-        var districts = locationGroup.AddPermission(DCMPermissions.Districts.Default, L("Permission:Districts"));
-        districts.AddChild(DCMPermissions.Districts.Create, L("Permission:District.Create"));
-        districts.AddChild(DCMPermissions.Districts.Edit, L("Permission:District.Edit"));
-        districts.AddChild(DCMPermissions.Districts.Delete, L("Permission:District.Delete"));
-        
-        
-       
-    }
+    // Parametreler İzinleri
+    var parameters = parameterGroup.AddPermission(DCMPermissions.Parameters.Default, L("Permission:Parameters"));
+    parameters.AddChild(DCMPermissions.Parameters.Create, L("Permission:Parameters.Create"));
+    parameters.AddChild(DCMPermissions.Parameters.Edit, L("Permission:Parameters.Edit"));
+    parameters.AddChild(DCMPermissions.Parameters.Delete, L("Permission:Parameters.Delete"));
+
+    // Türler İzinleri
+    var serviceTypes = myGroup.AddPermission(DCMPermissions.Types.ServiceTypes.Default, L("Permission:ServiceTypes"));
+    serviceTypes.AddChild(DCMPermissions.Types.ServiceTypes.Create, L("Permission:ServiceTypes.Create"));
+    serviceTypes.AddChild(DCMPermissions.Types.ServiceTypes.Edit, L("Permission:ServiceTypes.Edit"));
+    serviceTypes.AddChild(DCMPermissions.Types.ServiceTypes.Delete, L("Permission:ServiceTypes.Delete"));
+
+    var lineStatusCodes = myGroup.AddPermission(DCMPermissions.Types.LineStatusCodes.Default, L("Permission:LineStatusCodes"));
+    lineStatusCodes.AddChild(DCMPermissions.Types.LineStatusCodes.Create, L("Permission:LineStatusCodes.Create"));
+    lineStatusCodes.AddChild(DCMPermissions.Types.LineStatusCodes.Edit, L("Permission:LineStatusCodes.Edit"));
+    lineStatusCodes.AddChild(DCMPermissions.Types.LineStatusCodes.Delete, L("Permission:LineStatusCodes.Delete"));
+
+    var jobCodes = myGroup.AddPermission(DCMPermissions.Types.JobCodes.Default, L("Permission:JobCodes"));
+    jobCodes.AddChild(DCMPermissions.Types.JobCodes.Create, L("Permission:JobCodes.Create"));
+    jobCodes.AddChild(DCMPermissions.Types.JobCodes.Edit, L("Permission:JobCodes.Edit"));
+    jobCodes.AddChild(DCMPermissions.Types.JobCodes.Delete, L("Permission:JobCodes.Delete"));
+
+    var identityTypes = myGroup.AddPermission(DCMPermissions.Types.IdentityTypes.Default, L("Permission:IdentityTypes"));
+    identityTypes.AddChild(DCMPermissions.Types.IdentityTypes.Create, L("Permission:IdentityTypes.Create"));
+    identityTypes.AddChild(DCMPermissions.Types.IdentityTypes.Edit, L("Permission:IdentityTypes.Edit"));
+    identityTypes.AddChild(DCMPermissions.Types.IdentityTypes.Delete, L("Permission:IdentityTypes.Delete"));
+
+    var customerMovementCodes = myGroup.AddPermission(DCMPermissions.Types.CustomerMovementCodes.Default, L("Permission:CustomerMovementCodes"));
+    customerMovementCodes.AddChild(DCMPermissions.Types.CustomerMovementCodes.Create, L("Permission:CustomerMovementCodes.Create"));
+    customerMovementCodes.AddChild(DCMPermissions.Types.CustomerMovementCodes.Edit, L("Permission:CustomerMovementCodes.Edit"));
+    customerMovementCodes.AddChild(DCMPermissions.Types.CustomerMovementCodes.Delete, L("Permission:CustomerMovementCodes.Delete"));
+
+    // Lokasyon İzinleri
+    var countries = locationGroup.AddPermission(DCMPermissions.Locations.Countries.Default, L("Permission:Countries"));
+    countries.AddChild(DCMPermissions.Locations.Countries.Create, L("Permission:Countries.Create"));
+    countries.AddChild(DCMPermissions.Locations.Countries.Edit, L("Permission:Countries.Edit"));
+    countries.AddChild(DCMPermissions.Locations.Countries.Delete, L("Permission:Countries.Delete"));
+
+    var cities = locationGroup.AddPermission(DCMPermissions.Locations.Cities.Default, L("Permission:Cities"));
+    cities.AddChild(DCMPermissions.Locations.Cities.Create, L("Permission:Cities.Create"));
+    cities.AddChild(DCMPermissions.Locations.Cities.Edit, L("Permission:Cities.Edit"));
+    cities.AddChild(DCMPermissions.Locations.Cities.Delete, L("Permission:Cities.Delete"));
+
+    var districts = locationGroup.AddPermission(DCMPermissions.Locations.Districts.Default, L("Permission:Districts"));
+    districts.AddChild(DCMPermissions.Locations.Districts.Create, L("Permission:Districts.Create"));
+    districts.AddChild(DCMPermissions.Locations.Districts.Edit, L("Permission:Districts.Edit"));
+    districts.AddChild(DCMPermissions.Locations.Districts.Delete, L("Permission:Districts.Delete"));
+}
+
 
     private static LocalizableString L(string name)
     {

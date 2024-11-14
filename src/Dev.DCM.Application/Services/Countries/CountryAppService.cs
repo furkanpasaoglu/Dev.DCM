@@ -19,11 +19,11 @@ public class CountryAppService :
 {
     public CountryAppService(IRepository<Country, Guid> repository) : base(repository)
     {
-        GetPolicyName = Permissions.DCMPermissions.Countries.Default;
-        GetListPolicyName = Permissions.DCMPermissions.Countries.Default;
-        CreatePolicyName = Permissions.DCMPermissions.Countries.Create;
-        UpdatePolicyName = Permissions.DCMPermissions.Countries.Edit;
-        DeletePolicyName = Permissions.DCMPermissions.Countries.Delete;
+        GetPolicyName = Permissions.DCMPermissions.Locations.Countries.Default;
+        GetListPolicyName = Permissions.DCMPermissions.Locations.Countries.Default;
+        CreatePolicyName = Permissions.DCMPermissions.Locations.Countries.Create;
+        UpdatePolicyName = Permissions.DCMPermissions.Locations.Countries.Edit;
+        DeletePolicyName = Permissions.DCMPermissions.Locations.Countries.Delete;
     }
 
     public override async Task<CountryDto> CreateAsync(CreateUpdateCountryDto input)
@@ -37,7 +37,7 @@ public class CountryAppService :
     private async Task IsCountryExists(string name, string? code)
     {
         var existing = await Repository.AnyAsync(c => c.Name == name || c.Code == name);
-        if (!existing)
+        if (existing)
         {
             throw new UserFriendlyException(message: L["AlreadyExists"]);
         }

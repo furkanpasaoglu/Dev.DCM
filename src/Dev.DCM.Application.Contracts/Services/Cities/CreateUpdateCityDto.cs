@@ -8,7 +8,7 @@ public class CreateUpdateCityDto
 {
     public string? Code { get; set; }  
     [Required]
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
     [Required]
     public Guid CountryId { get; set; }
 }

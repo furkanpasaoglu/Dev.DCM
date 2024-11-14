@@ -38,14 +38,14 @@ $(function () {
                             [
                                 {
                                     text: l('Edit'),
-                                    visible: abp.auth.isGranted('DCM.Location.District.Edit'),
+                                    visible: abp.auth.isGranted('DCM.Locations.Districts.Edit'),
                                     action: function (data) {
                                         editModal.open({ id: data.record.id });
                                     }
                                 },
                                 {
                                     text: l('Delete'),
-                                    visible: abp.auth.isGranted('DCM.Location.District.Delete'),
+                                    visible: abp.auth.isGranted('DCM.Locations.Districts.Delete'),
                                     confirmMessage: function (data) {
                                         return l('DistrictDeletionConfirmationMessage', data.record.name);
                                     },

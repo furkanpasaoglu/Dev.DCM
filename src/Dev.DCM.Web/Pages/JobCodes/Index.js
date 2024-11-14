@@ -38,14 +38,14 @@ $(function () {
                             [
                                 {
                                     text: l('Edit'),
-                                    visible: abp.auth.isGranted('DCM.JobCode.Edit'),
+                                    visible: abp.auth.isGranted('DCM.Types.JobCodes.Edit'),
                                     action: function (data) {
                                         editModal.open({ id: data.record.id });
                                     }
                                 },
                                 {
                                     text: l('Delete'),
-                                    visible: abp.auth.isGranted('DCM.JobCode.Delete'),
+                                    visible: abp.auth.isGranted('DCM.Types.JobCodes.Delete'),
                                     confirmMessage: function (data) {
                                         return l('JobCodeDeletionConfirmationMessage', data.record.name);
                                     },

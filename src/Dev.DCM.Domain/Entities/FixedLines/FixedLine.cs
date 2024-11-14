@@ -1,4 +1,6 @@
-﻿namespace Dev.DCM.Entities.FixedLines;
+﻿using Dev.DCM.Entities.Lines;
+
+namespace Dev.DCM.Entities.FixedLines;
 
 /// <summary>
 /// SABIT
@@ -109,4 +111,7 @@ public class FixedLine : FullAuditedEntity<Guid>
     /// SABIT_ALFANUMERIK_BASLIK
     /// </summary>
     public string? AlphanumericTitle { get; set; }
+    
+    
+    public Guid LineId { get; set; }
 }

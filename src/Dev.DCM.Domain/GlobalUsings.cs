@@ -9,7 +9,6 @@ global using Dev.DCM.Entities.Cities;
 global using Dev.DCM.Entities.Districts;
 global using System.Collections.Generic;
 global using Volo.Abp.Domain.Entities;
-global using Dev.DCM.Entities.Institutions;
 global using Dev.DCM.Entities.AuthorizedPersons;
 global using Dev.DCM.Entities.Satellites;
 global using Dev.DCM.Entities.SatellitePhones;

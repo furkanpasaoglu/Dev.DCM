@@ -15,7 +15,7 @@ public class City : Entity<Guid>
     /// <summary>
     /// İlçe Adı
     /// </summary>
-    public string Name { get; set; } = null!;
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// Şehirdeki İlçeler

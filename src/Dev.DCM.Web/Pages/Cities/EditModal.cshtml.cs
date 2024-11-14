@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dev.DCM.Services.Cities;
 using Dev.DCM.Services.Countries;
+using Dev.DCM.Web.Extensions;
+using Dev.DCM.Web.ViewModels.Cities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,69 +17,46 @@ using Volo.Abp.Localization;
 
 namespace Dev.DCM.Web.Pages.Cities;
 
-public class EditModal : DCMPageModel
+public class EditModal(ICityAppService cityAppService, ICountryAppService countryAppService)  : DCMPageModel
 {
-    [BindProperty]
-    public CityEditDetailModel CreateUpdateCity { get; set; }
-    
-    [HiddenInput]
     [BindProperty(SupportsGet = true)]
-    public Guid Id { get; set; }
-    
-    public List<SelectListItem> Countries { get; set; } 
-    
-    private readonly ICityAppService _cityAppService;
-    private readonly ICountryAppService _countryAppService;
+    public CityEditViewModel CityEditViewModel { get; set; } = new();
 
-    public EditModal(ICityAppService cityAppService, ICountryAppService countryAppService)
-    {
-        _cityAppService = cityAppService;
-        _countryAppService = countryAppService;
-    }
-    
     public async Task OnGetAsync()
     {
-        var createUpdateCityDto = await _cityAppService.GetAsync(Id);
-
-        CreateUpdateCity = new CityEditDetailModel
+        if (CityEditViewModel.Id.HasValue)
         {
-            Name = createUpdateCityDto.Name,
-            Code = createUpdateCityDto.Code ?? string.Empty,
-            CountryId = createUpdateCityDto.CountryId
-        };
-        var countries = await _countryAppService.GetListAsync(new PagedAndSortedResultRequestDto());
-        Countries = countries.Items
+            // Update işlemi: Şehri Id'ye göre al
+            var createUpdateCityDto = await cityAppService.GetAsync(CityEditViewModel.Id.Value);
+
+            CityEditViewModel = new CityEditViewModel
+            {
+                Id = createUpdateCityDto.Id,
+                Name = createUpdateCityDto.Name,
+                Code = createUpdateCityDto.Code ?? string.Empty,
+                CountryId = createUpdateCityDto.CountryId
+            };
+        }
+       
+        var countries = await countryAppService.GetListAsync(new PagedAndSortedResultRequestDto());
+        CityEditViewModel.Countries = countries.Items
             .Select(c => new SelectListItem(c.Name, c.Id.ToString()))
             .ToList();
-        Countries.Insert(0, new SelectListItem { Value = "", Text = L["Select"] });
+        CityEditViewModel.Countries.AddSelectOption(L["Select"]);
     }
     
     public async Task<IActionResult> OnPostAsync()
     {
-        await _cityAppService.UpdateAsync(Id, new CreateUpdateCityDto
+        if (CityEditViewModel.Id.HasValue)
         {
-            Name = CreateUpdateCity.Name,
-            Code = CreateUpdateCity.Code,
-            CountryId = CreateUpdateCity.CountryId
-        });
+            // Update işlemi: Şehir verisini güncelliyoruz
+            await cityAppService.UpdateAsync(CityEditViewModel.Id.Value, new CreateUpdateCityDto
+            {
+                Name = CityEditViewModel.Name,
+                Code = CityEditViewModel.Code,
+                CountryId = CityEditViewModel.CountryId
+            });
+        }
         return NoContent();
-    }
-    
-    public class CityEditDetailModel
-    {
-        [Required(ErrorMessage = "CityNameIsRequired")]
-        [Placeholder("CityNamePlaceholder")]
-        [DisplayOrder(1)]
-        public string Name { get; set; }
-        
-        [DisplayOrder(2)]
-        public string? Code { get; set; }
-        
-        [Required(ErrorMessage = "CountryIsRequired")]
-        [SelectItems(nameof(Countries))]
-        [Display(Name = "Country")]
-        [DisplayOrder(3)]
-        public Guid CountryId { get; set; }
-
     }
 }

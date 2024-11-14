@@ -1,4 +1,6 @@
-﻿namespace Dev.DCM.Entities.GsmDetails
+﻿using Dev.DCM.Entities.Lines;
+
+namespace Dev.DCM.Entities.GsmDetails
 {
     /// <summary>
     /// GSM
@@ -99,5 +101,7 @@
         /// GSM_ALFANUMERIK_BASLIK
         /// </summary>
         public string? AlphanumericTitle { get; set; }
+        
+        public Guid LineId { get; set; }
     }
 }

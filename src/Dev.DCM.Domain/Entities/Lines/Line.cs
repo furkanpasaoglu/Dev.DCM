@@ -1,4 +1,9 @@
-﻿namespace Dev.DCM.Entities.Lines
+﻿using Dev.DCM.Entities.Aihs;
+using Dev.DCM.Entities.FixedLines;
+using Dev.DCM.Entities.GsmDetails;
+using Dev.DCM.Entities.InternetServices;
+
+namespace Dev.DCM.Entities.Lines
 {
     /// <summary>
     /// HAT Entity
@@ -24,5 +29,25 @@
         /// HAT_DURUM_KODU_ACIKLAMA
         /// </summary>
         public string? StatusCodeDescription { get; set; }
+
+        public bool? IsActive { get; set; }
+
+        public Guid SubscriberId { get; set; }
+        public Subscriber Subscriber { get; set; } 
+
+        public Guid FixedLineId { get; set; }
+        public FixedLine FixedLine { get; set; }
+        
+        public Guid GsmDetailId { get; set; }
+        public GsmDetail GsmDetail { get; set; }
+        
+        public Guid InternetServiceId { get; set; }
+        public InternetService InternetService { get; set; }
+        
+        public Guid SatelliteId { get; set; }
+        public Satellite Satellite { get; set; }
+        
+        public Guid AihId { get; set; }
+        public Aih Aih { get; set; }
     }
 }

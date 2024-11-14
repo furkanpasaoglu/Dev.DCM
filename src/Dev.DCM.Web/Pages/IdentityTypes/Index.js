@@ -50,14 +50,14 @@ $(function () {
                             [
                                 {
                                     text: l('Edit'),
-                                    visible: abp.auth.isGranted('DCM.IdentityType.Edit'),
+                                    visible: abp.auth.isGranted('DCM.Types.IdentityTypes.Edit'),
                                     action: function (data) {
                                         editModal.open({ id: data.record.id });
                                     }
                                 },
                                 {
                                     text: l('Delete'),
-                                    visible: abp.auth.isGranted('DCM.IdentityType.Delete'),
+                                    visible: abp.auth.isGranted('DCM.Types.IdentityTypes.Delete'),
                                     confirmMessage: function (data) {
                                         return l('IdentityTypeDeletionConfirmationMessage', data.record.name);
                                     },

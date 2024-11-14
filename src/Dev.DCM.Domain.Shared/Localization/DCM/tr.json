@@ -150,6 +150,7 @@
     "TenantDetailNameIsRequired": "Kiracı adı zorunludur",
     "TenantName": "Kiracı Adı",
     "TaxNumber": "Vergi Numarası",
-    "OperatorCode": "Operatör Kodu"
+    "OperatorCode": "Operatör Kodu",
+    "Dashboard": "Anasayfa"
   }
 }

@@ -25,7 +25,7 @@
                 <abp-card-title>@L["Cities"]</abp-card-title>
             </abp-column>
             <abp-column size-md="_6" class="text-end">
-                @if (await AuthorizationService.IsGrantedAsync(DCMPermissions.Cities.Create))
+                @if (await AuthorizationService.IsGrantedAsync(DCMPermissions.Locations.Cities.Create))
                 {
                     <abp-button id="NewCityButton"
                                 text="@L["NewCity"].Value"

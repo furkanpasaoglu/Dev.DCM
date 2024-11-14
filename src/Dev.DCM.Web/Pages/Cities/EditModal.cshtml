@@ -8,11 +8,11 @@
     Layout = null;
 }
 
-<abp-dynamic-form abp-model="CreateUpdateCity" asp-page="/Cities/EditModal">
+<abp-dynamic-form abp-model="CityEditViewModel" asp-page="/Cities/EditModal">
     <abp-modal>
         <abp-modal-header title="@L["Update"].Value"></abp-modal-header>
         <abp-modal-body>
-            <abp-input asp-for="Id" hidden="true" />
+            <abp-input asp-for="CityEditViewModel.Id" hidden="true" />
             <abp-form-content/>
         </abp-modal-body>
         <abp-modal-footer buttons="@(AbpModalButtons.Cancel | AbpModalButtons.Save)"></abp-modal-footer>
