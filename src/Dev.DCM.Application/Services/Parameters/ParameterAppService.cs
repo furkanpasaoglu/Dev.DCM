@@ -8,41 +8,35 @@ using Volo.Abp.Domain.Repositories;
 
 namespace Dev.DCM.Services.Parameters;
 
-public class ParameterAppService :
+public class ParameterAppService(IRepository<Parameter, Guid> repository, ParameterValidationService parameterValidationService) :
     CrudAppService<
         Parameter,
         ParameterDto,
         Guid,
         PagedAndSortedResultRequestDto,
-        CreateUpdateParameterDto>,
+        CreateUpdateParameterDto>(repository),
     IParameterAppService
 {
-    public ParameterAppService(IRepository<Parameter, Guid> repository) : base(repository)
-    {
-        GetPolicyName = Permissions.DCMPermissions.Parameters.Default;
-        GetListPolicyName = Permissions.DCMPermissions.Parameters.Default;
-        CreatePolicyName = Permissions.DCMPermissions.Parameters.Create;
-        UpdatePolicyName = Permissions.DCMPermissions.Parameters.Edit;
-        DeletePolicyName = Permissions.DCMPermissions.Parameters.Delete;
-    }
+    protected override string? GetPolicyName { get; set; } = Permissions.DCMPermissions.Parameters.Default;
+    protected override string? GetListPolicyName { get; set; } = Permissions.DCMPermissions.Parameters.Default;
+    protected override string? CreatePolicyName { get; set; } = Permissions.DCMPermissions.Parameters.Create;
+    protected override string? UpdatePolicyName { get; set; } = Permissions.DCMPermissions.Parameters.Edit;
+    protected override string? DeletePolicyName { get; set; } = Permissions.DCMPermissions.Parameters.Delete;
 
     public override async Task<ParameterDto> CreateAsync(CreateUpdateParameterDto input)
     {
-        await IsParameterExists(input.Name);
+        await ValidateDtoAsync(input);
         return await base.CreateAsync(input);
     }
     
-    #region Validation
-
-    private async Task IsParameterExists(string name)
+    private async Task ValidateDtoAsync(CreateUpdateParameterDto input)
     {
-        var existing = await Repository.AnyAsync(c => c.Name == name);
-        if (existing)
-        {
-            throw new UserFriendlyException(message: L["AlreadyExists"]);
-        }
+        await parameterValidationService.IsParameterExists(input.Name);
     }
-   
-    #endregion
-
+    
+    public override async Task<ParameterDto> UpdateAsync(Guid id, CreateUpdateParameterDto input)
+    {
+        await ValidateDtoAsync(input);
+        return await base.UpdateAsync(id, input);
+    }
 }

@@ -9,34 +9,53 @@ using Volo.Abp.Domain.Repositories;
 
 namespace Dev.DCM.Services.TenantDetails;
 
-public class TenantDetailAppService :
-    CrudAppService<
-        TenantDetail,
-        TenantDetailDto,
-        Guid,
-        PagedAndSortedResultRequestDto,
-        CreateUpdateTenantDetailDto>,
-    ITenantDetailAppService
+public class TenantDetailAppService(
+    IRepository<TenantDetail, Guid> repository,
+    TenantDetailValidationService tenantDetailValidationService)
+    :
+        CrudAppService<
+            TenantDetail,
+            TenantDetailDto,
+            Guid,
+            PagedAndSortedResultRequestDto,
+            CreateUpdateTenantDetailDto>(repository),
+        ITenantDetailAppService
 {
-    public TenantDetailAppService(IRepository<TenantDetail, Guid> repository) : base(repository)
-    {
-        GetPolicyName = Permissions.DCMPermissions.TenantDetails.Default;
-        GetListPolicyName = Permissions.DCMPermissions.TenantDetails.Default;
-        CreatePolicyName = Permissions.DCMPermissions.TenantDetails.Create;
-        UpdatePolicyName = Permissions.DCMPermissions.TenantDetails.Edit;
-        DeletePolicyName = Permissions.DCMPermissions.TenantDetails.Delete;
-    }
-    
+    protected override string? GetPolicyName { get; set; } = Permissions.DCMPermissions.TenantDetails.Default;
+    protected override string? GetListPolicyName { get; set; } = Permissions.DCMPermissions.TenantDetails.Default;
+    protected override string? CreatePolicyName { get; set; } = Permissions.DCMPermissions.TenantDetails.Create;
+    protected override string? UpdatePolicyName { get; set; } = Permissions.DCMPermissions.TenantDetails.Edit;
+    protected override string? DeletePolicyName { get; set; } = Permissions.DCMPermissions.TenantDetails.Delete;
+
     public override async Task<PagedResultDto<TenantDetailDto>> GetListAsync(PagedAndSortedResultRequestDto input)
     {
         var queryable = await Repository.WithDetailsAsync(c => c.Tenant);
         var totalCount = await AsyncExecuter.CountAsync(queryable);
-        var items = await AsyncExecuter.ToListAsync(queryable.PageBy(input));
+        var items = await AsyncExecuter
+            .ToListAsync(queryable.PageBy(input)
+                .OrderBy(c => c.Name)
+            );
         
         return new PagedResultDto<TenantDetailDto>(
             totalCount,
             ObjectMapper.Map<List<TenantDetail>, List<TenantDetailDto>>(items)
         );
+    }
+    private async Task ValidateDtoAsync(CreateUpdateTenantDetailDto input, Guid? existingId = null)
+    {
+        await tenantDetailValidationService.IsTenantDetailNameUniqueAsync(input.Name, existingId);
+    }
+    
+    public override async Task<TenantDetailDto> CreateAsync(CreateUpdateTenantDetailDto input)
+    {
+        await ValidateDtoAsync(input);
+        return await base.CreateAsync(input);
+    }
+    
+    public override async Task<TenantDetailDto> UpdateAsync(Guid id, CreateUpdateTenantDetailDto input)
+    {
+        await ValidateDtoAsync(input);
+        return await base.UpdateAsync(id, input);
     }
 }
    
