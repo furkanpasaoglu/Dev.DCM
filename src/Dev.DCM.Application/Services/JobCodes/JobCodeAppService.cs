@@ -8,40 +8,38 @@ using Volo.Abp.Domain.Repositories;
 
 namespace Dev.DCM.Services.JobCodes;
 
-public class JobCodeAppService :
+public class JobCodeAppService(IRepository<JobCode, Guid> repository, JobCodeAppValidationService jobCodeAppValidationService) :
     CrudAppService<
         JobCode,
         JobCodeDto,
         Guid,
         PagedAndSortedResultRequestDto,
-        CreateUpdateJobCodeDto>,
+        CreateUpdateJobCodeDto>(repository),
     IJobCodeAppService
 {
-    public JobCodeAppService(IRepository<JobCode, Guid> repository) : base(repository)
-    {
-        GetPolicyName = Permissions.DCMPermissions.Types.JobCodes.Default;
-        GetListPolicyName = Permissions.DCMPermissions.Types.JobCodes.Default;
-        CreatePolicyName = Permissions.DCMPermissions.Types.JobCodes.Create;
-        UpdatePolicyName = Permissions.DCMPermissions.Types.JobCodes.Edit;
-        DeletePolicyName = Permissions.DCMPermissions.Types.JobCodes.Delete;
-    }
+    protected override string? GetPolicyName { get; set; } = Permissions.DCMPermissions.Types.JobCodes.Default;
+    protected override string? GetListPolicyName { get; set; } = Permissions.DCMPermissions.Types.JobCodes.Default;
+    protected override string? CreatePolicyName { get; set; } = Permissions.DCMPermissions.Types.JobCodes.Create;
+    protected override string? UpdatePolicyName { get; set; } = Permissions.DCMPermissions.Types.JobCodes.Edit;
+    protected override string? DeletePolicyName { get; set; } = Permissions.DCMPermissions.Types.JobCodes.Delete;
 
     public override async Task<JobCodeDto> CreateAsync(CreateUpdateJobCodeDto input)
     {
-        await IsJobCodeExists(input.No, input.Code);
+        await ValidateDtoAsync(input.No, input.Code);
         return await base.CreateAsync(input);
     }
-    
-    #region Validation
 
-    private async Task IsJobCodeExists(int no, string? code)
+    public override async Task<JobCodeDto> UpdateAsync(Guid id, CreateUpdateJobCodeDto input)
     {
-        var existing = await Repository.AnyAsync(c => c.No == no || c.Code == code);
-        if (existing)
-        {
-            throw new UserFriendlyException(message: L["AlreadyExists"]);
-        }
+        await ValidateDtoAsync(input.No, input.Code);
+        return await base.UpdateAsync(id, input);
     }
 
-    #endregion
+
+    private async Task ValidateDtoAsync(int no, string? code)
+    {
+       await jobCodeAppValidationService.IsJobCodeExists(no, code);
+    }
+
+
 }
