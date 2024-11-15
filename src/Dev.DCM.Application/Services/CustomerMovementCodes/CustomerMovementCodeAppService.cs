@@ -8,40 +8,33 @@ using Volo.Abp.Domain.Repositories;
 
 namespace Dev.DCM.Services.CustomerMovementCodes;
 
-public class CustomerMovementCodeAppService :
+public class CustomerMovementCodeAppService(IRepository<CustomerMovementCode, Guid> repository, CustomerMovementValidationService customerMovementValidationService) :
     CrudAppService<
         CustomerMovementCode,
         CustomerMovementCodeDto,
         Guid,
         PagedAndSortedResultRequestDto,
-        CreateUpdateCustomerMovementCodeDto>,
+        CreateUpdateCustomerMovementCodeDto>(repository),
     ICustomerMovementCodeAppService
 {
-    public CustomerMovementCodeAppService(IRepository<CustomerMovementCode, Guid> repository) : base(repository)
-    {
-        GetPolicyName = Permissions.DCMPermissions.Types.CustomerMovementCodes.Default;
-        GetListPolicyName = Permissions.DCMPermissions.Types.CustomerMovementCodes.Default;
-        CreatePolicyName = Permissions.DCMPermissions.Types.CustomerMovementCodes.Create;
-        UpdatePolicyName = Permissions.DCMPermissions.Types.CustomerMovementCodes.Edit;
-        DeletePolicyName = Permissions.DCMPermissions.Types.CustomerMovementCodes.Delete;
-    }
+    protected override string GetPolicyName { get; set; } = Permissions.DCMPermissions.Types.CustomerMovementCodes.Default;
+    protected override string GetListPolicyName { get; set; } = Permissions.DCMPermissions.Types.CustomerMovementCodes.Default;
+    protected override string CreatePolicyName { get; set; } = Permissions.DCMPermissions.Types.CustomerMovementCodes.Create;
+    protected override string UpdatePolicyName { get; set; } = Permissions.DCMPermissions.Types.CustomerMovementCodes.Edit;
+    protected override string DeletePolicyName { get; set; } = Permissions.DCMPermissions.Types.CustomerMovementCodes.Delete;
 
     public override async Task<CustomerMovementCodeDto> CreateAsync(CreateUpdateCustomerMovementCodeDto input)
     {
-        await IsCustomerMovementCodeExists(input.Code, input.Description);
+        await ValidateDtoAsync(input.Code, input.Description);
         return await base.CreateAsync(input);
     }
-    
-    #region Validation
-
-    private async Task IsCustomerMovementCodeExists(string code, string? description)
+    public override async Task<CustomerMovementCodeDto> UpdateAsync(Guid id, CreateUpdateCustomerMovementCodeDto input)
     {
-        var existing = await Repository.AnyAsync(c => c.Code == code || c.Description == description);
-        if (existing)
-        {
-            throw new UserFriendlyException(message: L["AlreadyExists"]);
-        }
+        await ValidateDtoAsync(input.Code, input.Description);
+        return await base.UpdateAsync(id, input);
     }
-
-    #endregion
+    private async Task ValidateDtoAsync(string code, string? description)
+    {
+        await customerMovementValidationService.IsCustomerMovementCodeExists(code, description);
+    }
 }

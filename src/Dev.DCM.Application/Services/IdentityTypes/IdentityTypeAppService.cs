@@ -8,40 +8,35 @@ using Volo.Abp.Domain.Repositories;
 
 namespace Dev.DCM.Services.IdentityTypes;
 
-public class IdentityTypeAppService :
+public class IdentityTypeAppService(IRepository<IdentityType, Guid> repository,IdentityTypeValidation identityTypeValidation ) :
     CrudAppService<
         IdentityType,
         IdentityTypeDto,
         Guid,
         PagedAndSortedResultRequestDto,
-        CreateUpdateIdentityTypeDto>,
+        CreateUpdateIdentityTypeDto>(repository),
     IIdentityTypeAppService
 {
-    public IdentityTypeAppService(IRepository<IdentityType, Guid> repository) : base(repository)
-    {
-        GetPolicyName = Permissions.DCMPermissions.Types.IdentityTypes.Default;
-        GetListPolicyName = Permissions.DCMPermissions.Types.IdentityTypes.Default;
-        CreatePolicyName = Permissions.DCMPermissions.Types.IdentityTypes.Create;
-        UpdatePolicyName = Permissions.DCMPermissions.Types.IdentityTypes.Edit;
-        DeletePolicyName = Permissions.DCMPermissions.Types.IdentityTypes.Delete;
-    }
+    protected override string GetPolicyName { get; set; } = Permissions.DCMPermissions.Types.IdentityTypes.Default;
+    protected override string GetListPolicyName { get; set; } = Permissions.DCMPermissions.Types.IdentityTypes.Default;
+    protected override string CreatePolicyName { get; set; } = Permissions.DCMPermissions.Types.IdentityTypes.Create;
+    protected override string UpdatePolicyName { get; set; } = Permissions.DCMPermissions.Types.IdentityTypes.Edit;
+    protected override string DeletePolicyName { get; set; } = Permissions.DCMPermissions.Types.IdentityTypes.Delete;
 
     public override async Task<IdentityTypeDto> CreateAsync(CreateUpdateIdentityTypeDto input)
     {
-        await IsIdentityTypeExists(input.No);
+        await ValidateDtoAsync(input);
         return await base.CreateAsync(input);
     }
 
-    #region Validation
-
-    private async Task IsIdentityTypeExists(int no)
+    public override async Task<IdentityTypeDto> UpdateAsync(Guid id, CreateUpdateIdentityTypeDto input)
     {
-        var existing = await Repository.AnyAsync(c => c.No == no);
-        if (existing)
-        {
-            throw new UserFriendlyException(message: L["AlreadyExists"]);
-        }
+        await ValidateDtoAsync(input);
+        return await base.UpdateAsync(id, input);
     }
 
-    #endregion
+    public async Task ValidateDtoAsync(CreateUpdateIdentityTypeDto input)
+    {
+        await identityTypeValidation.IsIdentityTypeExists(input.No);
+    }
 }

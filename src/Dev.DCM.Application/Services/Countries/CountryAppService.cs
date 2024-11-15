@@ -8,40 +8,35 @@ using Volo.Abp.Domain.Repositories;
 
 namespace Dev.DCM.Services.Countries;
 
-public class CountryAppService :
+public class CountryAppService(IRepository<Country, Guid> repository, CountryValidationService countryValidationService) :
     CrudAppService<
         Country,
         CountryDto,
         Guid,
         PagedAndSortedResultRequestDto,
-        CreateUpdateCountryDto>,
+        CreateUpdateCountryDto>(repository),
     ICountryAppService
 {
-    public CountryAppService(IRepository<Country, Guid> repository) : base(repository)
-    {
-        GetPolicyName = Permissions.DCMPermissions.Locations.Countries.Default;
-        GetListPolicyName = Permissions.DCMPermissions.Locations.Countries.Default;
-        CreatePolicyName = Permissions.DCMPermissions.Locations.Countries.Create;
-        UpdatePolicyName = Permissions.DCMPermissions.Locations.Countries.Edit;
-        DeletePolicyName = Permissions.DCMPermissions.Locations.Countries.Delete;
-    }
+    protected override string? GetPolicyName { get; set; } = Permissions.DCMPermissions.Locations.Countries.Default;
+    protected override string? GetListPolicyName { get; set; } = Permissions.DCMPermissions.Locations.Countries.Default;
+    protected override string? CreatePolicyName { get; set; } = Permissions.DCMPermissions.Locations.Countries.Create;
+    protected override string? UpdatePolicyName { get; set; } = Permissions.DCMPermissions.Locations.Countries.Edit;
+    protected override string? DeletePolicyName { get; set; } = Permissions.DCMPermissions.Locations.Countries.Delete;
 
     public override async Task<CountryDto> CreateAsync(CreateUpdateCountryDto input)
     {
-        await IsCountryExists(input.Name, input.Code);
+        await ValidateDtoAsync(input.Name, input.Code);
         return await base.CreateAsync(input);
     }
 
-    #region Validation
-
-    private async Task IsCountryExists(string name, string? code)
+    private async Task ValidateDtoAsync(string name, string? code)
     {
-        var existing = await Repository.AnyAsync(c => c.Name == name || c.Code == name);
-        if (existing)
-        {
-            throw new UserFriendlyException(message: L["AlreadyExists"]);
-        }
+       await countryValidationService.IsCountryNameUniqueAsync(name);
     }
 
-    #endregion
+    public override async Task<CountryDto> UpdateAsync(Guid id, CreateUpdateCountryDto input)
+    {
+        await ValidateDtoAsync(input.Name, input.Code);
+        return await base.UpdateAsync(id, input);
+    }
 }

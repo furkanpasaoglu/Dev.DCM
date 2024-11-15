@@ -8,40 +8,32 @@ using Volo.Abp.Domain.Repositories;
 
 namespace Dev.DCM.Services.LineStatusCodes;
 
-public class LineStatusCodeAppService :
+public class LineStatusCodeAppService(IRepository<LineStatusCode, Guid> repository, LineStatusCodeAppValidationService lineStatusCodeAppValidation) :
     CrudAppService<
         LineStatusCode,
         LineStatusCodeDto,
         Guid,
         PagedAndSortedResultRequestDto,
-        CreateUpdateLineStatusCodeDto>,
+        CreateUpdateLineStatusCodeDto>(repository),
     ILineStatusCodeAppService
 {
-    public LineStatusCodeAppService(IRepository<LineStatusCode, Guid> repository) : base(repository)
-    {
-        GetPolicyName = Permissions.DCMPermissions.Types.LineStatusCodes.Default;
-        GetListPolicyName = Permissions.DCMPermissions.Types.LineStatusCodes.Default;
-        CreatePolicyName = Permissions.DCMPermissions.Types.LineStatusCodes.Create;
-        UpdatePolicyName = Permissions.DCMPermissions.Types.LineStatusCodes.Edit;
-        DeletePolicyName = Permissions.DCMPermissions.Types.LineStatusCodes.Delete;
-    }
+    protected override string GetPolicyName { get; set; } = Permissions.DCMPermissions.Types.LineStatusCodes.Default;
+    protected override string GetListPolicyName { get; set; } = Permissions.DCMPermissions.Types.LineStatusCodes.Default;
+    protected override string CreatePolicyName { get; set; } = Permissions.DCMPermissions.Types.LineStatusCodes.Create;
+    protected override string UpdatePolicyName { get; set; } = Permissions.DCMPermissions.Types.LineStatusCodes.Edit;
+    protected override string DeletePolicyName { get; set; } = Permissions.DCMPermissions.Types.LineStatusCodes.Delete;
 
     public override async Task<LineStatusCodeDto> CreateAsync(CreateUpdateLineStatusCodeDto input)
     {
-        await IsLineStatusCodeExists(input.Code);
+        await ValidateDtoAsync(input.Code);
         return await base.CreateAsync(input);
     }
 
-    #region Validation
 
-    private async Task IsLineStatusCodeExists(string code)
+
+    private async Task ValidateDtoAsync(string code)
     {
-        var existing = await Repository.AnyAsync(c =>c.Code == code);
-        if (existing)
-        {
-            throw new UserFriendlyException(message: L["AlreadyExists"]);
-        }
+        await lineStatusCodeAppValidation.IsLineStatusCodeExists(code);
     }
 
-    #endregion
 }

@@ -10,23 +10,20 @@ using Volo.Abp.Domain.Repositories;
 
 namespace Dev.DCM.Services.Districts;
 
-public class DistrictAppService :
+public class DistrictAppService(IRepository<District, Guid> repository, DistrictAppValidationService districtAppValidation) :
     CrudAppService<
         District,
         DistrictDto,
         Guid,
         PagedAndSortedResultRequestDto,
-        CreateUpdateDistrictDto>,
+        CreateUpdateDistrictDto>(repository),
     IDistrictAppService
 {
-    public DistrictAppService(IRepository<District, Guid> repository) : base(repository)
-    {
-        GetPolicyName = Permissions.DCMPermissions.Locations.Districts.Default;
-        GetListPolicyName = Permissions.DCMPermissions.Locations.Districts.Default;
-        CreatePolicyName = Permissions.DCMPermissions.Locations.Districts.Create;
-        UpdatePolicyName = Permissions.DCMPermissions.Locations.Districts.Edit;
-        DeletePolicyName = Permissions.DCMPermissions.Locations.Districts.Delete;
-    }
+    protected override string GetPolicyName { get; set; } = Permissions.DCMPermissions.Locations.Districts.Default;
+    protected override string GetListPolicyName { get; set; } = Permissions.DCMPermissions.Locations.Districts.Default;
+    protected override string CreatePolicyName { get; set; } = Permissions.DCMPermissions.Locations.Districts.Create;
+    protected override string UpdatePolicyName { get; set; } = Permissions.DCMPermissions.Locations.Districts.Edit;
+    protected override string DeletePolicyName { get; set; } = Permissions.DCMPermissions.Locations.Districts.Delete;
 
     public override async Task<PagedResultDto<DistrictDto>> GetListAsync(PagedAndSortedResultRequestDto input)
     {
@@ -42,20 +39,17 @@ public class DistrictAppService :
 
     public override async Task<DistrictDto> CreateAsync(CreateUpdateDistrictDto input)
     {
-        await IsDistrictExists(input.Name);
+        await ValidateDtoAsync(input.Name);
         return await base.CreateAsync(input);
     }
-    
-    #region Validation
 
-    private async Task IsDistrictExists(string name)
+    public override async Task<DistrictDto> UpdateAsync(Guid id, CreateUpdateDistrictDto input)
     {
-        var existing = await Repository.AnyAsync(c => c.Name == name);
-        if (existing)
-        {
-            throw new UserFriendlyException(message: L["AlreadyExists"]);
-        }
+        await ValidateDtoAsync(input.Name);
+        return await base.UpdateAsync(id, input);
     }
-
-    #endregion
+    private async Task ValidateDtoAsync(string name)
+    {
+        await districtAppValidation.IsDistrictExists(name);
+    }
 }
