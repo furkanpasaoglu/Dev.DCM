@@ -1,4 +1,6 @@
 ﻿
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Dev.DCM.Entities.Addresses;
 
 /// <summary>
@@ -24,10 +26,12 @@ public class Address : FullAuditedEntity<Guid>
     /// <summary>
     /// IRTIBAT
     /// </summary>
+    public Guid? ContactInfoId { get; set; }
     public ContactInfo? ContactInfo { get; set; }
 
     /// <summary>
     /// YERLESIM
     /// </summary>
+    public Guid? ResidentialAddressId { get; set; }
     public ResidentialAddress? ResidentialAddress { get; set; } 
 }

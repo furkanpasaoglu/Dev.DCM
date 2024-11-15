@@ -1,4 +1,6 @@
-﻿namespace Dev.DCM.Entities.AuthorizedPersons;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Dev.DCM.Entities.AuthorizedPersons;
 
 /// <summary>
 /// KURUM_YETKILI
@@ -30,8 +32,9 @@ public class AuthorizedPerson : FullAuditedEntity<Guid>
     /// </summary>
     public string? InstitutionAddress { get; set; }
 
-
+    [ForeignKey(nameof(Subscriber))]
     public Guid SubscriberId { get; set; }
+    public Subscriber Subscriber { get; set; }
 
 
 }

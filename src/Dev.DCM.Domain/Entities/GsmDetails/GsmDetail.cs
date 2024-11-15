@@ -1,4 +1,5 @@
-﻿using Dev.DCM.Entities.Lines;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Dev.DCM.Entities.Lines;
 
 namespace Dev.DCM.Entities.GsmDetails
 {
@@ -103,5 +104,6 @@ namespace Dev.DCM.Entities.GsmDetails
         public string? AlphanumericTitle { get; set; }
         
         public Guid LineId { get; set; }
+        public Line Line { get; set; }
     }
 }

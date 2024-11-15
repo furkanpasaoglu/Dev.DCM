@@ -1,4 +1,5 @@
-﻿using Dev.DCM.Entities.Lines;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Dev.DCM.Entities.Lines;
 
 namespace Dev.DCM.Entities.FixedLines;
 
@@ -112,6 +113,6 @@ public class FixedLine : FullAuditedEntity<Guid>
     /// </summary>
     public string? AlphanumericTitle { get; set; }
     
-    
     public Guid LineId { get; set; }
+    public Line Line { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using Dev.DCM.Entities.Lines;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Dev.DCM.Entities.Lines;
 
 namespace Dev.DCM.Entities.InternetServices;
 
@@ -23,4 +24,5 @@ public class InternetService : FullAuditedEntity<Guid>
     public string? PopInfo { get; set; }
     
     public Guid LineId { get; set; }
+    public Line Line { get; set; }
 }

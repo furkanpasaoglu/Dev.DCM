@@ -1,4 +1,6 @@
-﻿namespace Dev.DCM.Entities.FacilityAddresses;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Dev.DCM.Entities.FacilityAddresses;
 
 /// <summary>
 /// ABONE_ADRES_TESIS
@@ -49,6 +51,7 @@ public class FacilityAddress : FullAuditedEntity<Guid>
     /// <summary>
     /// Address_Id
     /// </summary>
+    [ForeignKey(nameof(Address))]
     public Guid AddressId { get; set; }
 
     /// <summary>

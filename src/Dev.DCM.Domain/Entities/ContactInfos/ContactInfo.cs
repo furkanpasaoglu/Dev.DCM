@@ -1,4 +1,6 @@
-﻿namespace Dev.DCM.Entities.ContactInfos;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Dev.DCM.Entities.ContactInfos;
 
 /// <summary>
 /// ABONE_ADRES_IRTIBAT
@@ -18,10 +20,11 @@ public class ContactInfo : FullAuditedEntity<Guid>
     /// <summary>
     /// Address_Id
     /// </summary>
+    [ForeignKey(nameof(Address))]
     public Guid AddressId { get; set; }
 
     /// <summary>
     /// Address
     /// </summary>
-    public Address Address { get; set; } = default!;
+    public Address? Address { get; set; } 
 }

@@ -8,41 +8,39 @@ using Volo.Abp.Domain.Repositories;
 
 namespace Dev.DCM.Services.ServiceTypes;
 
-public class ServiceTypeAppService :
-    CrudAppService<
-        ServiceType,
-        ServiceTypeDto,
-        Guid,
-        PagedAndSortedResultRequestDto,
-        CreateUpdateServiceTypeDto>,
-    IServiceTypeAppService
+public class ServiceTypeAppService(
+    IRepository<ServiceType, Guid> repository,
+    ServiceTypeValidationService serviceTypeValidationService)
+    :
+        CrudAppService<
+            ServiceType,
+            ServiceTypeDto,
+            Guid,
+            PagedAndSortedResultRequestDto,
+            CreateUpdateServiceTypeDto>(repository),
+        IServiceTypeAppService
 {
-    public ServiceTypeAppService(IRepository<ServiceType, Guid> repository) : base(repository)
-    {
-        GetPolicyName = Permissions.DCMPermissions.Types.ServiceTypes.Default;
-        GetListPolicyName = Permissions.DCMPermissions.Types.ServiceTypes.Default;
-        CreatePolicyName = Permissions.DCMPermissions.Types.ServiceTypes.Create;
-        UpdatePolicyName = Permissions.DCMPermissions.Types.ServiceTypes.Edit;
-        DeletePolicyName = Permissions.DCMPermissions.Types.ServiceTypes.Delete;
-    }
+    protected override string? GetPolicyName { get; set; } = Permissions.DCMPermissions.Types.ServiceTypes.Default;
+    protected override string? GetListPolicyName { get; set; } = Permissions.DCMPermissions.Types.ServiceTypes.Default;
+    protected override string? CreatePolicyName { get; set; } = Permissions.DCMPermissions.Types.ServiceTypes.Create;
+    protected override string? UpdatePolicyName { get; set; } = Permissions.DCMPermissions.Types.ServiceTypes.Edit;
+    protected override string? DeletePolicyName { get; set; } = Permissions.DCMPermissions.Types.ServiceTypes.Delete;
 
+    private async Task ValidateDtoAsync(CreateUpdateServiceTypeDto input, Guid? existingId = null)
+    {
+        await serviceTypeValidationService.IsServiceTypeExistsAsync(input.No, input.ServiceTypeValue, existingId);
+    }
+    
     public override async Task<ServiceTypeDto> CreateAsync(CreateUpdateServiceTypeDto input)
     {
-        await IsServiceTypeExists(input.No, input.ServiceTypeValue);
+        await ValidateDtoAsync(input);
         return await base.CreateAsync(input);
     }
-
-    #region Validation
-
-    private async Task IsServiceTypeExists(int no, string serviceTypeValue)
+    
+    public override async Task<ServiceTypeDto> UpdateAsync(Guid id, CreateUpdateServiceTypeDto input)
     {
-        var existing = await Repository.AnyAsync(c =>c.No == no || c.ServiceTypeValue == serviceTypeValue);
-        if (existing)
-        {
-            throw new UserFriendlyException(message: L["AlreadyExists"]);
-        }
+        await ValidateDtoAsync(input, id);
+        return await base.UpdateAsync(id, input);
     }
-
-    #endregion
     
 }

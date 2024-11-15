@@ -1,4 +1,5 @@
-﻿using Dev.DCM.Entities.Aihs;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Dev.DCM.Entities.Aihs;
 
 namespace Dev.DCM.Entities.Districts;
 
@@ -18,9 +19,7 @@ public class District : Entity<Guid>
     public string Name { get; set; } = null!;
 
 
-    /// <summary>
-    /// Foreign key to City (İl)
-    /// </summary>
+    [ForeignKey(nameof(City))]
     public Guid CityId { get; set; }
     public City City { get; set; } = default!;
     

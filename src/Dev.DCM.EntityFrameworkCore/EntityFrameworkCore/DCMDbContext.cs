@@ -19,6 +19,7 @@ using Dev.DCM.Entities.JobCodes;
 using Dev.DCM.Entities.Lines;
 using Dev.DCM.Entities.LineStatusCodes;
 using Dev.DCM.Entities.Parameters;
+using Dev.DCM.Entities.Rates;
 using Dev.DCM.Entities.ResidentialAddresses;
 using Dev.DCM.Entities.SatellitePhones;
 using Dev.DCM.Entities.Satellites;
@@ -109,6 +110,7 @@ public class DCMDbContext :
     public DbSet<CustomerMovementCode> CustomerMovementCodes { get; set; }
     public DbSet<Parameter> Parameters { get; set; }
     public DbSet<TenantDetail> TenantDetails { get; set; }
+    public DbSet<Rate> Rates { get; set; }
 
     #endregion
 
@@ -133,12 +135,7 @@ public class DCMDbContext :
         builder.ConfigureFeatureManagement();
         builder.ConfigureTenantManagement();
 
-        builder.Entity<TenantDetail>(b =>
-        {
-            b.ToTable(DCMConsts.DbTablePrefix + "TenantDetails", DCMConsts.DbSchema);
-            b.ConfigureByConvention();
-        });
-
+        
         builder.Entity<AuthorizedPerson>(b =>
         {
             b.ToTable(DCMConsts.DbTablePrefix + "AuthorizedPersons", DCMConsts.DbSchema);
@@ -156,13 +153,7 @@ public class DCMDbContext :
             b.ToTable(DCMConsts.DbTablePrefix + "ContactInfos", DCMConsts.DbSchema);
             b.ConfigureByConvention();
         });
-
-        builder.Entity<CustomerMovement>(b =>
-        {
-            b.ToTable(DCMConsts.DbTablePrefix + "CustomerMovements", DCMConsts.DbSchema);
-            b.ConfigureByConvention();
-        }); 
-          
+        
         builder.Entity<FacilityAddress>(b =>
         {
             b.ToTable(DCMConsts.DbTablePrefix + "FacilityAddresses", DCMConsts.DbSchema);
@@ -204,6 +195,21 @@ public class DCMDbContext :
         {
             b.ToTable(DCMConsts.DbTablePrefix + "ResidentialAddresses", DCMConsts.DbSchema);
             b.ConfigureByConvention();
+            
+            // //City 1-N
+            // b.HasOne(x => x.City)
+            //     .WithMany(x => x.ResidentialAddresses)
+            //     .HasForeignKey(x => x.CityId);
+            //
+            // //District 1-N
+            // b.HasOne(x => x.District)
+            //     .WithMany(x => x.ResidentialAddresses)
+            //     .HasForeignKey(x => x.DistrictId);
+            //
+            // //Address 1-1
+            // b.HasOne(x => x.Address)
+            //     .WithOne(x => x.ResidentialAddress)
+            //     .HasForeignKey<Address>(x => x.ResidentialAddressId);
         });  
         
         builder.Entity<SatellitePhone>(b =>
@@ -228,6 +234,22 @@ public class DCMDbContext :
         {
             b.ToTable(DCMConsts.DbTablePrefix + "Aihs", DCMConsts.DbSchema);
             b.ConfigureByConvention();
+            
+            // //Country 1-N
+            // b.HasOne(x => x.Country)
+            //     .WithMany(x => x.Aihs)
+            //     .HasForeignKey(x => x.CountryId);
+            //
+            // //City 1-N
+            // b.HasOne(x => x.City)
+            //     .WithMany(x => x.Aihs)
+            //     .HasForeignKey(x => x.CityId);
+            //
+            // //District 1-N
+            // b.HasOne(x => x.District)
+            //     .WithMany(x => x.Aihs)
+            //     .HasForeignKey(x => x.DistrictId);
+            
         }); 
         
         builder.Entity<Updater>(b =>
@@ -247,9 +269,7 @@ public class DCMDbContext :
             b.ToTable(DCMConsts.DbTablePrefix + "Activations", DCMConsts.DbSchema);
             b.ConfigureByConvention();
         });
-
-
-
+        
         builder.Entity<ServiceType>(b =>
         {
             b.ToTable(DCMConsts.DbTablePrefix + "ServiceTypes", DCMConsts.DbSchema);
@@ -294,6 +314,16 @@ public class DCMDbContext :
             b.ConfigureByConvention();
             b.HasIndex(x => x.Name).IsUnique();
             b.HasIndex(x => x.Code).IsUnique();
+            
+            // //City n-1
+            // b.HasMany(x => x.Cities)
+            //     .WithOne(x => x.Country)
+            //     .HasForeignKey(x => x.CountryId);
+            //
+            // //N-1 Aihs
+            // b.HasMany(x => x.Aihs)
+            //     .WithOne(x => x.Country)
+            //     .HasForeignKey(x => x.CountryId);
         });
 
         builder.Entity<City>(b =>
@@ -301,6 +331,26 @@ public class DCMDbContext :
             b.ToTable(DCMConsts.DbTablePrefix + "Cities", DCMConsts.DbSchema);
             b.ConfigureByConvention();
             b.HasIndex(x => x.Name).IsUnique();
+            
+            // //City 1-n
+            // b.HasOne(x => x.Country)
+            //     .WithMany(x => x.Cities)
+            //     .HasForeignKey(x => x.CountryId);
+            //
+            // //Districts N-1 yap
+            // b.HasMany(x => x.Districts)
+            //     .WithOne(x => x.City)
+            //     .HasForeignKey(x => x.CityId);
+            //
+            // //  ResidentialAddress N-1
+            // b.HasMany(x => x.ResidentialAddresses)
+            //     .WithOne(x => x.City)
+            //     .HasForeignKey(x => x.CityId);
+            //
+            // // Aih N-1
+            // b.HasMany(x => x.Aihs)
+            //     .WithOne(x => x.City)
+            //     .HasForeignKey(x => x.CityId);
         });
 
         builder.Entity<District>(b =>
@@ -308,6 +358,21 @@ public class DCMDbContext :
             b.ToTable(DCMConsts.DbTablePrefix + "Districts", DCMConsts.DbSchema);
             b.ConfigureByConvention();
             b.HasIndex(x => x.Name).IsUnique();
+            
+            // //City 1-N
+            // b.HasOne(x => x.City)
+            //     .WithMany(x => x.Districts)
+            //     .HasForeignKey(x => x.CityId);
+            //
+            // // ResidentialAddress N-1
+            // b.HasMany(x => x.ResidentialAddresses)
+            //     .WithOne(x => x.District)
+            //     .HasForeignKey(x => x.DistrictId);
+            //
+            // // Aih N-1
+            // b.HasMany(x => x.Aihs)
+            //     .WithOne(x => x.District)
+            //     .HasForeignKey(x => x.DistrictId);
         });
         
         builder.Entity<Parameter>(b =>
@@ -315,6 +380,24 @@ public class DCMDbContext :
             b.ToTable(DCMConsts.DbTablePrefix + "Parameters", DCMConsts.DbSchema);
             b.ConfigureByConvention();
             b.HasIndex(x=>x.Name).IsUnique();
+        });
+        
+        builder.Entity<CustomerMovement>(b =>
+        {
+            b.ToTable(DCMConsts.DbTablePrefix + "CustomerMovements", DCMConsts.DbSchema);
+            b.ConfigureByConvention();
+        }); 
+        
+        builder.Entity<TenantDetail>(b =>
+        {
+            b.ToTable(DCMConsts.DbTablePrefix + "TenantDetails", DCMConsts.DbSchema);
+            b.ConfigureByConvention();
+        });
+        
+        builder.Entity<Rate>(b =>
+        {
+            b.ToTable(DCMConsts.DbTablePrefix + "Rates", DCMConsts.DbSchema);
+            b.ConfigureByConvention();
         });
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Dev.DCM.Entities.Countries;
+﻿using Dev.DCM.Entities.Aihs;
+
+namespace Dev.DCM.Entities.Countries;
 
 public class Country : Entity<Guid>
 {
@@ -14,4 +16,5 @@ public class Country : Entity<Guid>
     public string Name { get; set; } = null!;
 
     public ICollection<City> Cities { get; private set; } = new List<City>();
+    public ICollection<Aih> Aihs { get; private set; } = new List<Aih>();
 }

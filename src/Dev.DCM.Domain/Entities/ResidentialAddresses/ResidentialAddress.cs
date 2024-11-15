@@ -1,4 +1,6 @@
-﻿namespace Dev.DCM.Entities.ResidentialAddresses;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Dev.DCM.Entities.ResidentialAddresses;
 
 /// <summary>
 /// ABONE_ADRES_YERLESIM
@@ -8,6 +10,7 @@ public class ResidentialAddress : FullAuditedEntity<Guid>
     /// <summary>
     /// ABONE_ADRES_YERLESIM_IL
     /// </summary>
+    [ForeignKey(nameof(City))]
     public Guid? CityId { get; set; }
     /// <summary>
     /// İl
@@ -17,6 +20,7 @@ public class ResidentialAddress : FullAuditedEntity<Guid>
     /// <summary>
     /// ABONE_ADRES_YERLESIM_ILCE
     /// </summary>
+    [ForeignKey(nameof(District))]
     public Guid? DistrictId { get; set; }
 
     /// <summary>
@@ -53,6 +57,7 @@ public class ResidentialAddress : FullAuditedEntity<Guid>
     /// <summary>
     /// Address_Id
     /// </summary>
+    [ForeignKey(nameof(Address))]
     public Guid AddressId { get; set; }
 
     /// <summary>

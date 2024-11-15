@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Dev.DCM.Entities.Branches;
 using Volo.Abp.Identity;
 using Volo.Abp.TenantManagement;
@@ -17,6 +18,7 @@ public class Updater : FullAuditedEntity<Guid>
     /// <summary>
     /// BranchId - Güncellemeyi yapan bayi (Foreign Key)
     /// </summary>
+    [ForeignKey(nameof(Branch))]
     public Guid? BranchId { get; set; }
     
     /// <summary>
@@ -27,13 +29,14 @@ public class Updater : FullAuditedEntity<Guid>
     /// <summary>
     /// TenantId - Çoklu tenant desteği için
     /// </summary>
+    [ForeignKey(nameof(Tenant))]
     public Guid? TenantId { get; set; }
-    
     public Tenant? Tenant { get; set; }
 
     /// <summary>
     /// PortalUserId - Portaldan güncelleyen kullanıcı
     /// </summary>
+    [ForeignKey(nameof(IdentityUser))]
     public Guid? UserId { get; set; }
     public IdentityUser? IdentityUser { get; set; }
 }
