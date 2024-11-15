@@ -1,4 +1,6 @@
-﻿namespace Dev.DCM.Entities.SatellitePhones;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Dev.DCM.Entities.SatellitePhones;
 
 /// <summary>
 /// UYDU_TELEFON
@@ -38,6 +40,7 @@ public class SatellitePhone : FullAuditedEntity<Guid>
     /// <summary>
     /// Foreign Key for SatelliteServiceDetail
     /// </summary>
+    [ForeignKey(nameof(Satellite))]
     public Guid SatelliteServiceDetailId { get; set; }
 
     /// <summary>

@@ -45,7 +45,7 @@ $(function () {
                                 },
                                 {
                                     text: l('Delete'),
-                                    visible: abp.auth.isGranted('DCM.CustomerMovementCodes.Delete'),
+                                    visible: abp.auth.isGranted('DCM.Types.CustomerMovementCodes.Delete'),
                                     confirmMessage: function (data) {
                                         return l('CustomerMovementCodeDeletionConfirmationMessage', data.record.name);
                                     },

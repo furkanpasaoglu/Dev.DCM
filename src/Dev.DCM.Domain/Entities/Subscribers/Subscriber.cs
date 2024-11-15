@@ -1,4 +1,6 @@
-﻿using Dev.DCM.Entities.Lines;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Dev.DCM.Entities.Lines;
+using Dev.DCM.Entities.Rates;
 
 namespace Dev.DCM.Entities.Subscribers;
 
@@ -105,21 +107,19 @@ public class Subscriber : FullAuditedEntity<Guid>
     /// <summary>
     /// ABONE_TARIFE
     /// </summary>
-    public string? Tariff { get; set; }
-
-    /// <summary>
-    /// ABONE_KIMLIK
-    /// </summary>
+    public Guid? RateId { get; set; }
+    public Rate? Rate { get; set; }
+    
+    public Guid? IdentityDocumentId { get; set; }
     public IdentityDocument? IdentityDocument { get; set; }
 
-    /// <summary>
-    /// ABONE_ADRES
-    /// </summary>
-    public Address? EmailAddress { get; set; }
-    
-    public ICollection<Line> Lines { get; set; } = new List<Line>();
-
+    [ForeignKey(nameof(Address))]
+    public Guid? AddressId { get; set; }
+    public Address? Address { get; set; }
 
     public Guid AuthorizedPersonId { get; set; }
     public AuthorizedPerson AuthorizedPerson { get; set; }
+    
+    public ICollection<Line> Lines { get; set; } = new List<Line>();
+
 }

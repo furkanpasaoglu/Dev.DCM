@@ -3,6 +3,7 @@ using System;
 using Dev.DCM.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Volo.Abp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Dev.DCM.Migrations
 {
     [DbContext(typeof(DCMDbContext))]
-    partial class DCMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241115143441_Edited_All_Entities_v3")]
+    partial class Edited_All_Entities_v3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,6 +54,9 @@ namespace Dev.DCM.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("DeletionTime");
 
+                    b.Property<Guid?>("IdentityUserId")
+                        .HasColumnType("uuid");
+
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
@@ -75,7 +81,7 @@ namespace Dev.DCM.Migrations
 
                     b.HasIndex("BranchId");
 
-                    b.HasIndex("PortalUserId");
+                    b.HasIndex("IdentityUserId");
 
                     b.HasIndex("TenantId");
 
@@ -85,9 +91,6 @@ namespace Dev.DCM.Migrations
             modelBuilder.Entity("Dev.DCM.Entities.Addresses.Address", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("ContactInfoId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreationTime")
@@ -123,13 +126,13 @@ namespace Dev.DCM.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("LastModifierId");
 
-                    b.Property<Guid?>("ResidentialAddressId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("SubscriberId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SubscriberId")
+                        .IsUnique();
 
                     b.ToTable("AppAddresses", (string)null);
                 });
@@ -282,9 +285,6 @@ namespace Dev.DCM.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SubscriberId")
-                        .IsUnique();
 
                     b.ToTable("AppAuthorizedPersons", (string)null);
                 });
@@ -1039,6 +1039,9 @@ namespace Dev.DCM.Migrations
                     b.Property<Guid>("AihId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("AihId1")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("CreationTime");
@@ -1058,10 +1061,19 @@ namespace Dev.DCM.Migrations
                     b.Property<Guid>("FixedLineId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("FixedLineId1")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("GsmDetailId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("GsmDetailId1")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("InternetServiceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("InternetServiceId1")
                         .HasColumnType("uuid");
 
                     b.Property<bool?>("IsActive")
@@ -1093,6 +1105,9 @@ namespace Dev.DCM.Migrations
                     b.Property<Guid>("SatelliteId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("SatelliteId1")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("StatusCodeDescription")
                         .HasColumnType("text");
 
@@ -1101,20 +1116,15 @@ namespace Dev.DCM.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AihId")
-                        .IsUnique();
+                    b.HasIndex("AihId1");
 
-                    b.HasIndex("FixedLineId")
-                        .IsUnique();
+                    b.HasIndex("FixedLineId1");
 
-                    b.HasIndex("GsmDetailId")
-                        .IsUnique();
+                    b.HasIndex("GsmDetailId1");
 
-                    b.HasIndex("InternetServiceId")
-                        .IsUnique();
+                    b.HasIndex("InternetServiceId1");
 
-                    b.HasIndex("SatelliteId")
-                        .IsUnique();
+                    b.HasIndex("SatelliteId1");
 
                     b.HasIndex("SubscriberId");
 
@@ -1144,62 +1154,6 @@ namespace Dev.DCM.Migrations
                         .IsUnique();
 
                     b.ToTable("AppParameters", (string)null);
-                });
-
-            modelBuilder.Entity("Dev.DCM.Entities.Rates.Rate", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("DeletionTime");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("LastModifierId");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<Guid>("SubscriberId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SubscriberId")
-                        .IsUnique();
-
-                    b.ToTable("AppRates", (string)null);
                 });
 
             modelBuilder.Entity("Dev.DCM.Entities.ResidentialAddresses.ResidentialAddress", b =>
@@ -1476,10 +1430,10 @@ namespace Dev.DCM.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("AddressId")
+                    b.Property<Guid>("AuthorizedPersonId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("AuthorizedPersonId")
+                    b.Property<Guid>("AuthorizedPersonId1")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime?>("BirthDate")
@@ -1519,9 +1473,6 @@ namespace Dev.DCM.Migrations
                     b.Property<string>("Gender")
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("IdentityDocumentId")
-                        .HasColumnType("uuid");
-
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
@@ -1560,14 +1511,14 @@ namespace Dev.DCM.Migrations
                     b.Property<string>("PassportNumber")
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("RateId")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime?>("SubscriptionEnd")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime?>("SubscriptionStart")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Tariff")
+                        .HasColumnType("text");
 
                     b.Property<string>("TaxNumber")
                         .HasColumnType("text");
@@ -1577,8 +1528,7 @@ namespace Dev.DCM.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId")
-                        .IsUnique();
+                    b.HasIndex("AuthorizedPersonId1");
 
                     b.ToTable("AppSubscribers", (string)null);
                 });
@@ -1664,6 +1614,9 @@ namespace Dev.DCM.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("DeletionTime");
 
+                    b.Property<Guid?>("IdentityUserId")
+                        .HasColumnType("uuid");
+
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
@@ -1691,9 +1644,9 @@ namespace Dev.DCM.Migrations
 
                     b.HasIndex("BranchId");
 
-                    b.HasIndex("TenantId");
+                    b.HasIndex("IdentityUserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("TenantId");
 
                     b.ToTable("AppUpdaters", (string)null);
                 });
@@ -3498,7 +3451,7 @@ namespace Dev.DCM.Migrations
 
                     b.HasOne("Volo.Abp.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
-                        .HasForeignKey("PortalUserId");
+                        .HasForeignKey("IdentityUserId");
 
                     b.HasOne("Volo.Abp.TenantManagement.Tenant", "Tenant")
                         .WithMany()
@@ -3511,6 +3464,17 @@ namespace Dev.DCM.Migrations
                     b.Navigation("Tenant");
                 });
 
+            modelBuilder.Entity("Dev.DCM.Entities.Addresses.Address", b =>
+                {
+                    b.HasOne("Dev.DCM.Entities.Subscribers.Subscriber", "Subscriber")
+                        .WithOne("EmailAddress")
+                        .HasForeignKey("Dev.DCM.Entities.Addresses.Address", "SubscriberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subscriber");
+                });
+
             modelBuilder.Entity("Dev.DCM.Entities.Aihs.Aih", b =>
                 {
                     b.HasOne("Dev.DCM.Entities.Cities.City", "City")
@@ -3518,7 +3482,7 @@ namespace Dev.DCM.Migrations
                         .HasForeignKey("CityId");
 
                     b.HasOne("Dev.DCM.Entities.Countries.Country", "Country")
-                        .WithMany("Aihs")
+                        .WithMany()
                         .HasForeignKey("CountryId");
 
                     b.HasOne("Dev.DCM.Entities.Districts.District", "District")
@@ -3530,17 +3494,6 @@ namespace Dev.DCM.Migrations
                     b.Navigation("Country");
 
                     b.Navigation("District");
-                });
-
-            modelBuilder.Entity("Dev.DCM.Entities.AuthorizedPersons.AuthorizedPerson", b =>
-                {
-                    b.HasOne("Dev.DCM.Entities.Subscribers.Subscriber", "Subscriber")
-                        .WithOne("AuthorizedPerson")
-                        .HasForeignKey("Dev.DCM.Entities.AuthorizedPersons.AuthorizedPerson", "SubscriberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Subscriber");
                 });
 
             modelBuilder.Entity("Dev.DCM.Entities.Cities.City", b =>
@@ -3601,32 +3554,32 @@ namespace Dev.DCM.Migrations
             modelBuilder.Entity("Dev.DCM.Entities.Lines.Line", b =>
                 {
                     b.HasOne("Dev.DCM.Entities.Aihs.Aih", "Aih")
-                        .WithOne("Line")
-                        .HasForeignKey("Dev.DCM.Entities.Lines.Line", "AihId")
+                        .WithMany()
+                        .HasForeignKey("AihId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Dev.DCM.Entities.FixedLines.FixedLine", "FixedLine")
-                        .WithOne("Line")
-                        .HasForeignKey("Dev.DCM.Entities.Lines.Line", "FixedLineId")
+                        .WithMany()
+                        .HasForeignKey("FixedLineId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Dev.DCM.Entities.GsmDetails.GsmDetail", "GsmDetail")
-                        .WithOne("Line")
-                        .HasForeignKey("Dev.DCM.Entities.Lines.Line", "GsmDetailId")
+                        .WithMany()
+                        .HasForeignKey("GsmDetailId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Dev.DCM.Entities.InternetServices.InternetService", "InternetService")
-                        .WithOne("Line")
-                        .HasForeignKey("Dev.DCM.Entities.Lines.Line", "InternetServiceId")
+                        .WithMany()
+                        .HasForeignKey("InternetServiceId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Dev.DCM.Entities.Satellites.Satellite", "Satellite")
-                        .WithOne("Line")
-                        .HasForeignKey("Dev.DCM.Entities.Lines.Line", "SatelliteId")
+                        .WithMany()
+                        .HasForeignKey("SatelliteId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -3645,17 +3598,6 @@ namespace Dev.DCM.Migrations
                     b.Navigation("InternetService");
 
                     b.Navigation("Satellite");
-
-                    b.Navigation("Subscriber");
-                });
-
-            modelBuilder.Entity("Dev.DCM.Entities.Rates.Rate", b =>
-                {
-                    b.HasOne("Dev.DCM.Entities.Subscribers.Subscriber", "Subscriber")
-                        .WithOne("Rate")
-                        .HasForeignKey("Dev.DCM.Entities.Rates.Rate", "SubscriberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("Subscriber");
                 });
@@ -3696,11 +3638,13 @@ namespace Dev.DCM.Migrations
 
             modelBuilder.Entity("Dev.DCM.Entities.Subscribers.Subscriber", b =>
                 {
-                    b.HasOne("Dev.DCM.Entities.Addresses.Address", "Address")
-                        .WithOne("Subscriber")
-                        .HasForeignKey("Dev.DCM.Entities.Subscribers.Subscriber", "AddressId");
+                    b.HasOne("Dev.DCM.Entities.AuthorizedPersons.AuthorizedPerson", "AuthorizedPerson")
+                        .WithMany()
+                        .HasForeignKey("AuthorizedPersonId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Address");
+                    b.Navigation("AuthorizedPerson");
                 });
 
             modelBuilder.Entity("Dev.DCM.Entities.TenantDetails.TenantDetail", b =>
@@ -3720,13 +3664,13 @@ namespace Dev.DCM.Migrations
                         .WithMany("Updaters")
                         .HasForeignKey("BranchId");
 
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("IdentityUserId");
+
                     b.HasOne("Volo.Abp.TenantManagement.Tenant", "Tenant")
                         .WithMany()
                         .HasForeignKey("TenantId");
-
-                    b.HasOne("Volo.Abp.Identity.IdentityUser", "IdentityUser")
-                        .WithMany()
-                        .HasForeignKey("UserId");
 
                     b.Navigation("Branch");
 
@@ -3882,14 +3826,6 @@ namespace Dev.DCM.Migrations
                     b.Navigation("ContactInfo");
 
                     b.Navigation("ResidentialAddress");
-
-                    b.Navigation("Subscriber");
-                });
-
-            modelBuilder.Entity("Dev.DCM.Entities.Aihs.Aih", b =>
-                {
-                    b.Navigation("Line")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Dev.DCM.Entities.Branches.Branch", b =>
@@ -3910,8 +3846,6 @@ namespace Dev.DCM.Migrations
 
             modelBuilder.Entity("Dev.DCM.Entities.Countries.Country", b =>
                 {
-                    b.Navigation("Aihs");
-
                     b.Navigation("Cities");
                 });
 
@@ -3922,42 +3856,18 @@ namespace Dev.DCM.Migrations
                     b.Navigation("ResidentialAddresses");
                 });
 
-            modelBuilder.Entity("Dev.DCM.Entities.FixedLines.FixedLine", b =>
-                {
-                    b.Navigation("Line")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Dev.DCM.Entities.GsmDetails.GsmDetail", b =>
-                {
-                    b.Navigation("Line")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Dev.DCM.Entities.InternetServices.InternetService", b =>
-                {
-                    b.Navigation("Line")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Dev.DCM.Entities.Satellites.Satellite", b =>
                 {
-                    b.Navigation("Line")
-                        .IsRequired();
-
                     b.Navigation("SatellitePhones");
                 });
 
             modelBuilder.Entity("Dev.DCM.Entities.Subscribers.Subscriber", b =>
                 {
-                    b.Navigation("AuthorizedPerson")
-                        .IsRequired();
+                    b.Navigation("EmailAddress");
 
                     b.Navigation("IdentityDocument");
 
                     b.Navigation("Lines");
-
-                    b.Navigation("Rate");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>

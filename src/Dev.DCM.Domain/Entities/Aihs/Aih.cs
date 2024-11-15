@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Dev.DCM.Entities.Lines;
 
 namespace Dev.DCM.Entities.Aihs;
@@ -51,18 +52,21 @@ public class Aih  : FullAuditedEntity<Guid>
     /// <summary>
     /// ABONE.ADRES.TESIS_ULKE_B
     /// </summary>
+    [ForeignKey(nameof(Country))]
     public Guid? CountryId { get; set; }
     public Country? Country { get; set; }
 
     /// <summary>
     /// ABONE.ADRES.TESIS_IL_B
     /// </summary>
+    [ForeignKey(nameof(City))]
     public Guid? CityId { get; set; }
     public City? City { get; set; }
 
     /// <summary>
     /// ABONE.ADRES.TESIS_ILCE_B
     /// </summary>
+    [ForeignKey(nameof(District))]
     public Guid? DistrictId { get; set; }
     public District? District { get; set; }
 
@@ -87,4 +91,5 @@ public class Aih  : FullAuditedEntity<Guid>
     public string? SubscriberApartmentNoB { get; set; }
     
     public Guid LineId { get; set; }
+    public Line Line { get; set; }
 }

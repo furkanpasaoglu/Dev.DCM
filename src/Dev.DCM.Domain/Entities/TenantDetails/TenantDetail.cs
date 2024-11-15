@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Volo.Abp.TenantManagement;
 
 namespace Dev.DCM.Entities.TenantDetails;
@@ -19,6 +20,7 @@ public class TenantDetail : FullAuditedEntity<Guid>
     /// </summary>
     public string Name { get; set; } = null!;
     
+    [ForeignKey(nameof(Tenant))]
     public Guid TenantId { get; set; }
     public Tenant Tenant { get; set; } = null!;
 }

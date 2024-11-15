@@ -1,4 +1,5 @@
-﻿using Dev.DCM.Entities.Aihs;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Dev.DCM.Entities.Aihs;
 
 namespace Dev.DCM.Entities.Cities;
 
@@ -17,14 +18,11 @@ public class City : Entity<Guid>
     /// </summary>
     public string Name { get; set; } = string.Empty;
 
-    /// <summary>
-    /// Şehirdeki İlçeler
-    /// </summary>
-    public ICollection<District> Districts { get; private set; } = new List<District>();
 
+    [ForeignKey(nameof(Country))]
     public Guid CountryId { get; set; }
     public Country Country { get; set; } = default!;
-    
     public ICollection<ResidentialAddress> ResidentialAddresses { get; private set; } = new List<ResidentialAddress>();
     public ICollection<Aih> Aihs { get; private set; } = new List<Aih>();
+    public ICollection<District> Districts { get; private set; } = new List<District>();
 }

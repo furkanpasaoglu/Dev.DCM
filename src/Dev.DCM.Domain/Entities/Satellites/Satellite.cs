@@ -1,4 +1,5 @@
-﻿using Dev.DCM.Entities.Lines;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Dev.DCM.Entities.Lines;
 
 namespace Dev.DCM.Entities.Satellites;
 
@@ -97,10 +98,9 @@ public class Satellite : FullAuditedEntity<Guid>
     /// </summary>
     public string? AlphanumericTitle { get; set; }
 
-    /// <summary>
-    /// UYDU_TELEFON
-    /// </summary>
+    public Guid LineId { get; set; }
+    public Line Line { get; set; }
+    
     public ICollection<SatellitePhone>? SatellitePhones { get; set; } = new List<SatellitePhone>();
     
-    public Guid LineId { get; set; }
 }

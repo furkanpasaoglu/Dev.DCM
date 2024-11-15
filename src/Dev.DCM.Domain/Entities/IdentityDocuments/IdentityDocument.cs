@@ -1,4 +1,6 @@
-﻿namespace Dev.DCM.Entities.IdentityDocuments;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Dev.DCM.Entities.IdentityDocuments;
 
 /// <summary>
 /// ABONE_KIMLIK Entity
@@ -63,6 +65,7 @@ public class IdentityDocument : FullAuditedEntity<Guid>
     /// <summary>
     /// ABONE_ID
     /// </summary>
+    [ForeignKey(nameof(Subscriber))]
     public Guid SubscriberId { get; set; }
 
     /// <summary>
