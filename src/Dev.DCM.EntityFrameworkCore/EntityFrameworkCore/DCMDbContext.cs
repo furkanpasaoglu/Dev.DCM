@@ -27,6 +27,7 @@ using Dev.DCM.Entities.ServiceTypes;
 using Dev.DCM.Entities.Subscribers;
 using Dev.DCM.Entities.TenantDetails;
 using Dev.DCM.Entities.Updaters;
+using Dev.DCM.Entities.UserDetails;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -111,6 +112,7 @@ public class DCMDbContext :
     public DbSet<Parameter> Parameters { get; set; }
     public DbSet<TenantDetail> TenantDetails { get; set; }
     public DbSet<Rate> Rates { get; set; }
+    public DbSet<UserDetail> UserDetails { get; set; }
 
     #endregion
 
@@ -397,6 +399,12 @@ public class DCMDbContext :
         builder.Entity<Rate>(b =>
         {
             b.ToTable(DCMConsts.DbTablePrefix + "Rates", DCMConsts.DbSchema);
+            b.ConfigureByConvention();
+        });
+        
+        builder.Entity<UserDetail>(b =>
+        {
+            b.ToTable(DCMConsts.DbTablePrefix + "UserDetails", DCMConsts.DbSchema);
             b.ConfigureByConvention();
         });
     }
