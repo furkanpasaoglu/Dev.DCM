@@ -1,0 +1,41 @@
+@page
+@using Dev.DCM.Localization
+@using Dev.DCM.Permissions
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@model Dev.DCM.Web.Pages.UserDetails.Index
+@inject IStringLocalizer<DCMResource> L
+@inject IAuthorizationService AuthorizationService
+@inject IPageLayout PageLayout
+@{
+    PageLayout.Content.BreadCrumb.Add(L["Dashboard"], "/");
+    PageLayout.Content.Title = L["UserDetails"];
+}
+
+@section scripts
+{
+    <abp-script src="/Pages/UserDetails/Index.js"/>
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["UserDetails"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-end">
+                @if (await AuthorizationService.IsGrantedAsync(DCMPermissions.UserDetails.Create))
+                {
+                    <abp-button id="NewUserDetailButton"
+                                text="@L["NewUserDetail"].Value"
+                                icon="plus"
+                                button-type="Primary"/>
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="UserDetailsTable"></abp-table>
+    </abp-card-body>
+</abp-card>

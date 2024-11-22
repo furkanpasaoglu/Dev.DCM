@@ -9,6 +9,7 @@ using Dev.DCM.Entities.LineStatusCodes;
 using Dev.DCM.Entities.Parameters;
 using Dev.DCM.Entities.ServiceTypes;
 using Dev.DCM.Entities.TenantDetails;
+using Dev.DCM.Entities.UserDetails;
 using Dev.DCM.Services.Cities;
 using Dev.DCM.Services.Countries;
 using Dev.DCM.Services.CustomerMovementCodes;
@@ -19,6 +20,7 @@ using Dev.DCM.Services.LineStatusCodes;
 using Dev.DCM.Services.Parameters;
 using Dev.DCM.Services.ServiceTypes;
 using Dev.DCM.Services.TenantDetails;
+using Dev.DCM.Services.UserDetails;
 
 namespace Dev.DCM;
 
@@ -65,5 +67,10 @@ public class DCMApplicationAutoMapperProfile : Profile
         CreateMap<TenantDetail, TenantDetailDto>();
         CreateMap<CreateUpdateTenantDetailDto, TenantDetail>();
         CreateMap<TenantDetailDto, CreateUpdateTenantDetailDto>();
+
+
+        CreateMap<UserDetail, UserDetailDto>();
+        CreateMap<CreateUpdateUserDetailDto, UserDetail>();
+        CreateMap<UserDetailDto, CreateUpdateUserDetailDto>();
     }
 }

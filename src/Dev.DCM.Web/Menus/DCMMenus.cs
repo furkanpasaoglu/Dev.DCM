@@ -26,5 +26,8 @@ public class DCMMenus
 
     // Kiracı Detayları Menüsü
     public const string TenantDetails = Prefix + ".TenantDetails";
+
+    // Kullanıcı Detay Menüsü
+    public const string UserDetails = Prefix + ".UserDetails";
 }
 

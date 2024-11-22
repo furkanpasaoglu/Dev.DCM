@@ -27,7 +27,16 @@ public static class DCMPermissions
         public const string Delete = Default + ".Delete";
     }
 
-    
+    // UserDetail
+    public static class UserDetails
+    {
+        public const string Default = GroupName + ".UserDetails";
+        public const string Create = Default + ".Create";
+        public const string Edit = Default + ".Edit";
+        public const string Delete = Default + ".Delete";
+    }
+
+
     // Türler Menüsü İzinleri
     public static class Types
     {
