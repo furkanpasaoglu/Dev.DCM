@@ -46,6 +46,16 @@ public class DCMMenuContributor : IMenuContributor
             ).RequirePermissions(requiresAll: false, DCMPermissions.Parameters.Default)
         );
 
+        // Kullanıcı Detayları
+        context.Menu.Items.Add(
+            new ApplicationMenuItem(
+                DCMMenus.UserDetails,
+                localizer["Menu:UserDetails"],
+                url: "/UserDetails",
+                icon: "fas fa-user"
+            ).RequirePermissions(requiresAll: false, DCMPermissions.UserDetails.Default)
+        );
+
         // Kiracı Detayları
         context.Menu.Items.Add(
             new ApplicationMenuItem(
