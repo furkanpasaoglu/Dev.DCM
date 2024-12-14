@@ -13,14 +13,14 @@ using Volo.Abp.Identity;
 
 namespace Dev.DCM.Web.Pages.UserDetails;
 
-public class CreateModal(IUserDetailAppService userDetailAppService, IIdentityUserAppService ýdentityUserAppService): DCMPageModel
+public class CreateModal(IUserDetailAppService userDetailAppService, IIdentityUserAppService identityUserAppService): DCMPageModel
 {
     [BindProperty]
     public UserDetailEditViewModel UserDetailEditViewModel { get; set; } = new();
 
     public async Task OnGet()
     {
-        var users = await ýdentityUserAppService.GetListAsync(new GetIdentityUsersInput());
+        var users = await identityUserAppService.GetListAsync(new GetIdentityUsersInput());
         UserDetailEditViewModel.Users = users.Items
             .Select(c => new SelectListItem(c.Name, c.Id.ToString()))
             .ToList();

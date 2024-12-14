@@ -1,0 +1,95 @@
+name: blogsphere
+
+services:
+   postgres:
+     container_name: postgres
+     image: postgres
+     ports:
+       - 5432:5432
+     environment:
+       POSTGRES_PASSWORD: Furkan2024!!
+     volumes:
+       - pgdata:/var/lib/postgresql/data
+
+   sqlserver:
+     container_name: sqlserver
+     image: mcr.microsoft.com/mssql/server
+     ports:
+       - 1433:1433
+     environment:
+       MSSQL_SA_PASSWORD: Furkan2024!!-*
+       ACCEPT_EULA: Y
+     volumes:
+       - sqlservervolume:/var/opt/mssql
+
+   rabbitmq:
+     container_name: rabbitmq
+     image: rabbitmq:3-management
+     ports:
+       - 5672:5672
+       - 15672:15672
+     volumes:
+       - rabbitmq_data:/var/lib/rabbitmq
+
+   redis:
+     container_name: redis
+     image: redis
+     ports:
+       - 6379:6379
+     volumes:
+       - redis_data:/data
+
+   elasticsearch:
+     container_name: elasticsearch
+     image: docker.elastic.co/elasticsearch/elasticsearch:8.14.1
+     environment:
+       - node.name=elasticsearch
+       - cluster.name=es-docker-cluster
+       - cluster.initial_master_nodes=elasticsearch
+       - bootstrap.memory_lock=true
+       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+       - xpack.security.enabled=false
+       - ELASTIC_USERNAME=elastic
+       - ELASTIC_PASSWORD=Furkan2024!!
+     ports:
+       - 9200:9200
+     networks:
+       - elastic
+     ulimits:
+       memlock:
+         soft: -1
+         hard: -1
+
+   kibana:
+      container_name: kibana
+      image: docker.elastic.co/kibana/kibana:8.14.1
+      ports:
+        - 5601:5601
+      environment:
+        ELASTICSEARCH_URL: http://elasticsearch:9200
+        ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+      networks:
+        - elastic
+ # mongodb:
+   # container_name: mongodb
+   # image: mongo
+   # ports:
+     # - 27017:27017
+   # environment:
+     # MONGO_INITDB_ROOT_USERNAME: root
+     # MONGO_INITDB_ROOT_PASSWORD: r00t.R00T
+ # mongoclient:
+   # container_name: mongoclient
+   # image: mongoclient/mongoclient
+   # ports:
+     # - 3000:3000
+networks:
+   elastic:
+     driver: bridge
+
+volumes:
+  sqlservervolume:
+  pgdata:
+  rabbitmq_data:
+  elastic:
+  redis_data:

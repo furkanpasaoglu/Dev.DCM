@@ -32,6 +32,8 @@ namespace Dev.DCM.Entities.Lines
         public string? StatusCodeDescription { get; set; }
 
         public bool? IsActive { get; set; }
+        public DateTime? StarDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         [ForeignKey(nameof(Subscriber))]
         public Guid SubscriberId { get; set; }

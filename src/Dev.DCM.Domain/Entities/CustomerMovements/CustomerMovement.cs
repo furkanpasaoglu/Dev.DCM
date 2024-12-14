@@ -19,4 +19,14 @@ public class CustomerMovement : FullAuditedEntity<Guid>
     /// MUSTERI_HAREKET_ZAMANI
     /// </summary>
     public DateTime? MovementTime { get; set; }
+
+    /// <summary>
+    /// Müşteri Varlık Tipi (Entity) Adı
+    /// </summary>
+    public string EntityMovementType { get; set; }
+    
+    /// <summary>
+    /// Müşteri Varlık Tipi (Entity) Id
+    /// </summary>
+    public Guid EntityMovementId { get; set; }
 }

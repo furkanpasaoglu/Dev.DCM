@@ -65,7 +65,6 @@ public class IdentityDocument : FullAuditedEntity<Guid>
     /// <summary>
     /// ABONE_ID
     /// </summary>
-    [ForeignKey(nameof(Subscriber))]
     public Guid SubscriberId { get; set; }
 
     /// <summary>

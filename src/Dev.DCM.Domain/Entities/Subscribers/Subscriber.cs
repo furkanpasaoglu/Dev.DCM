@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Dev.DCM.Entities.CustomerTypes;
 using Dev.DCM.Entities.Lines;
 using Dev.DCM.Entities.Rates;
 
@@ -17,7 +18,9 @@ public class Subscriber : FullAuditedEntity<Guid>
     /// <summary>
     /// MUSTERI_TIPI
     /// </summary>
-    public int? CustomerType { get; set; }
+    public CustomerType CustomerType { get; set; }
+    [ForeignKey(nameof(CustomerType))]
+    public Guid CustomerTypeId { get; set; }
 
     /// <summary>
     /// ABONE_BASLANGIC
@@ -110,6 +113,7 @@ public class Subscriber : FullAuditedEntity<Guid>
     public Guid? RateId { get; set; }
     public Rate? Rate { get; set; }
     
+    [ForeignKey(nameof(IdentityDocument))]
     public Guid? IdentityDocumentId { get; set; }
     public IdentityDocument? IdentityDocument { get; set; }
 
@@ -117,8 +121,9 @@ public class Subscriber : FullAuditedEntity<Guid>
     public Guid? AddressId { get; set; }
     public Address? Address { get; set; }
 
-    public Guid AuthorizedPersonId { get; set; }
-    public AuthorizedPerson AuthorizedPerson { get; set; }
+    [ForeignKey(nameof(AuthorizedPerson))]
+    public Guid? AuthorizedPersonId { get; set; }
+    public AuthorizedPerson? AuthorizedPerson { get; set; }
     
     public ICollection<Line> Lines { get; set; } = new List<Line>();
 
